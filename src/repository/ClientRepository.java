@@ -78,6 +78,22 @@ public class ClientRepository {
         }
         return clientOptional;
     }
+    public Optional<Client> findByName(String name){
+        Optional<Client> clientOptional = Optional.empty();
+        try {
+            String stm2 = "SELECT * FROM clients WHERE name = ?";
+            PreparedStatement preparedStatement2 = connection.prepareStatement(stm2);
+            preparedStatement2.setString(1, name);
+            ResultSet resultSet = preparedStatement2.executeQuery();
+            while (resultSet.next()){
+                clientOptional = Optional.of(new Client(resultSet.getString("name"),resultSet.getString("address"),resultSet.getString("phone"),resultSet.getBoolean("is_professional")));
+                clientOptional.get().setId(resultSet.getInt("id"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return clientOptional;
+    }
     public List<Client> getAll(){
         List<Client> clients = new ArrayList<>();
         try {

@@ -14,5 +14,8 @@ public class ClientService implements ClientServiceImpl {
     public List<Client> getAll(){
         return clientRepository.getAll();
     }
+    public Optional<Client> getByName(String name){
+        return  clientRepository.findByName(name);
+    }
 
 }

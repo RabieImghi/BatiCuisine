@@ -17,6 +17,7 @@ public class Main {
             switch (option){
                 case "1" : clientController.createClient();break;
                 case "2" : clientController.showClients();break;
+                case "3" : clientController.getByName(); break;
                 default:
                     System.out.println("inc");
             }

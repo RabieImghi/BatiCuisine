@@ -4,6 +4,7 @@ import domain.Client;
 import service.ClientService;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class ClientController {
@@ -28,5 +29,11 @@ public class ClientController {
     public void showClients(){
         List<Client> clientList= clientService.getAll();
         clientList.forEach(System.out::println);
+    }
+    public void  getByName(){
+        System.out.println("name : ");
+        String name = scanner.nextLine();
+        Optional<Client> client= clientService.getByName(name);
+        client.ifPresentOrElse(System.out::println, ()-> System.out.println("Not exist"));
     }
 }
