@@ -51,4 +51,15 @@ public class Client {
     public void setProfessional(boolean professional) {
         isProfessional = professional;
     }
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", phone='" + phone + '\'' +
+                ", isProfessional=" + isProfessional +
+                '}';
+    }
 }
