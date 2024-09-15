@@ -9,14 +9,16 @@ public class Main {
     static Scanner scanner = new Scanner(System.in);
     static ClientController clientController = new ClientController();
     public static void main(String[] args) {
-        menu.showMenu();
-        String option = scanner.nextLine();
-        Boolean exit = false;
+        boolean exit = false;
         do{
+            menu.showMenu();
+            String option = scanner.nextLine();
+
             switch (option){
-                case "1" :{
-                    clientController.createClient();
-                }
+                case "1" : clientController.createClient();break;
+                case "2" : clientController.showClients();break;
+                default:
+                    System.out.println("inc");
             }
 
 

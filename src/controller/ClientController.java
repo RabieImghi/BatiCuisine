@@ -3,11 +3,12 @@ package controller;
 import domain.Client;
 import service.ClientService;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class ClientController {
     public Scanner scanner = new Scanner(System.in);
-    private ClientService clientService = new ClientService();
+    private final ClientService clientService = new ClientService();
     public void createClient() {
         String name;
         String address;
@@ -23,6 +24,9 @@ public class ClientController {
         isProfessional = scanner.nextLine().equals("yes");
         Client client = new Client(name, address, phone, isProfessional);
         clientService.save(client);
-
+    }
+    public void showClients(){
+        List<Client> clientList= clientService.getAll();
+        clientList.forEach(System.out::println);
     }
 }
