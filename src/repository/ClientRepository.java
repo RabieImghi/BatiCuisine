@@ -19,8 +19,7 @@ public class ClientRepository {
     public Optional<Client> save(Client client){
         Optional<Client> clientOptional = Optional.empty();
         try {
-            connection.setAutoCommit(false);
-            String smt = "INSERT INTO clients (name,address,phone,is_professional) VALUES (?,?,?,?)";
+            String smt = "INSERT INTO clients (name, address, phone, is_professional) VALUES (?,?,?,?)";
             PreparedStatement preparedStatement = this.connection.prepareStatement(smt);
             preparedStatement.setString(1,client.getName());
             preparedStatement.setString(2,client.getAddress());
@@ -30,19 +29,8 @@ public class ClientRepository {
             if(rowsInserted > 0) {
                 clientOptional = Optional.of(client);
             }
-        } catch (SQLException e) {
-            try {
-                connection.rollback();
-            } catch (SQLException rollbackEx) {
-                rollbackEx.printStackTrace();
-            }
+        }catch (SQLException e){
             e.printStackTrace();
-        } finally {
-            try {
-                connection.setAutoCommit(true);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
         return clientOptional;
     }
@@ -74,12 +62,52 @@ public class ClientRepository {
         }
         return Optional.empty();
     }
+    public Optional<Client> delete(Client client){
+        try{
+            this.connection.setAutoCommit(false);
+            String stm = "DELETE FROM clients WHERE id = ?";
+            PreparedStatement preparedStatement = this.connection.prepareStatement(stm);
+            preparedStatement.setInt(1,client.getId());
+            int res = preparedStatement.executeUpdate();
+            if(res > 0) return Optional.of(client);
+        }catch (SQLException e){
+            try {
+                connection.rollback();
+            } catch (SQLException rollbackEx) {
+                rollbackEx.printStackTrace();
+            }
+            e.printStackTrace();
+        } finally {
+            try {
+                this.connection.setAutoCommit(true);
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return Optional.empty();
+    }
     public Optional<Client> findById(int id){
         Optional<Client> clientOptional = Optional.empty();
         try {
             String stm2 = "SELECT * FROM clients WHERE id = ?";
             PreparedStatement preparedStatement2 = connection.prepareStatement(stm2);
             preparedStatement2.setInt(1, id);
+            ResultSet resultSet = preparedStatement2.executeQuery();
+            while (resultSet.next()){
+                clientOptional = Optional.of(new Client(resultSet.getString("name"),resultSet.getString("address"),resultSet.getString("phone"),resultSet.getBoolean("is_professional")));
+                clientOptional.get().setId(resultSet.getInt("id"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return clientOptional;
+    }
+    public Optional<Client> findByName(String name){
+        Optional<Client> clientOptional = Optional.empty();
+        try {
+            String stm2 = "SELECT * FROM clients WHERE name = ?";
+            PreparedStatement preparedStatement2 = connection.prepareStatement(stm2);
+            preparedStatement2.setString(1, name);
             ResultSet resultSet = preparedStatement2.executeQuery();
             while (resultSet.next()){
                 clientOptional = Optional.of(new Client(resultSet.getString("name"),resultSet.getString("address"),resultSet.getString("phone"),resultSet.getBoolean("is_professional")));
