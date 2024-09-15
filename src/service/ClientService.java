@@ -17,5 +17,11 @@ public class ClientService implements ClientServiceImpl {
     public Optional<Client> getByName(String name){
         return  clientRepository.findByName(name);
     }
+    public Optional<Client> getById(int id){
+        return clientRepository.findById(id);
+    }
+    public Optional<Client> update(Client client){
+        return clientRepository.update(client);
+    }
 
 }

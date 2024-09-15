@@ -15,9 +15,11 @@ public class Main {
             String option = scanner.nextLine();
 
             switch (option){
-                case "1" : clientController.createClient();break;
-                case "2" : clientController.showClients();break;
+                case "1" : clientController.save();break;
+                case "2" : clientController.getAll();break;
                 case "3" : clientController.getByName(); break;
+                case "4" : clientController.getById(); break;
+                case "5" : clientController.update();
                 default:
                     System.out.println("inc");
             }
