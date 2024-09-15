@@ -2,6 +2,7 @@ package service;
 
 import domain.Client;
 import repository.ClientRepository;
+import service.impl.ClientServiceImpl;
 
 import java.util.List;
 import java.util.Optional;
