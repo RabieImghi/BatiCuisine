@@ -62,6 +62,30 @@ public class ClientRepository {
         }
         return Optional.empty();
     }
+    public Optional<Client> delete(Client client){
+        try{
+            this.connection.setAutoCommit(false);
+            String stm = "DELETE FROM clients WHERE id = ?";
+            PreparedStatement preparedStatement = this.connection.prepareStatement(stm);
+            preparedStatement.setInt(1,client.getId());
+            int res = preparedStatement.executeUpdate();
+            if(res > 0) return Optional.of(client);
+        }catch (SQLException e){
+            try {
+                connection.rollback();
+            } catch (SQLException rollbackEx) {
+                rollbackEx.printStackTrace();
+            }
+            e.printStackTrace();
+        } finally {
+            try {
+                this.connection.setAutoCommit(true);
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return Optional.empty();
+    }
     public Optional<Client> findById(int id){
         Optional<Client> clientOptional = Optional.empty();
         try {

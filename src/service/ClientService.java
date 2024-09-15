@@ -23,5 +23,8 @@ public class ClientService implements ClientServiceImpl {
     public Optional<Client> update(Client client){
         return clientRepository.update(client);
     }
+    public Optional<Client> delete(Client client){
+        return clientRepository.delete(client);
+    }
 
 }

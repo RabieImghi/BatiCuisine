@@ -59,4 +59,13 @@ public class ClientController {
             clientOptional.ifPresentOrElse(System.out::println,()-> System.out.println("not update"));
         },()-> System.out.println("not exi"));
     }
+    public void delete(){
+        System.out.println("Id : ");
+        int id = scanner.nextInt();
+        Optional<Client> client= clientService.getById(id);
+        client.ifPresentOrElse(client1 -> {
+            Optional<Client> clientOptional = clientService.delete(client1);
+            clientOptional.ifPresentOrElse(System.out::println,()-> System.out.println("Not delete"));
+        },()-> System.out.println("not found"));
+    }
 }

@@ -20,6 +20,7 @@ public class Main {
                 case "3" : clientController.getByName(); break;
                 case "4" : clientController.getById(); break;
                 case "5" : clientController.update();
+                case "6" : clientController.delete();
                 default:
                     System.out.println("inc");
             }
