@@ -1,5 +1,6 @@
 package service.impl;
 
+import domain.Client;
 import domain.Project;
 
 import java.util.List;
