@@ -8,8 +8,8 @@ public class DatabaseConnection {
     private static DatabaseConnection instance;
     public  DatabaseConnection() {
         try {
-            String url = "jdbc:mysql://localhost:3306/BatiCuisine";
-            String user = "BatCuisine";
+            String url = "jdbc:postgresql://localhost:5432/batCuisin";
+            String user = "batCuisin";
             String password = "";
             connection = DriverManager.getConnection(url, user, password);
         } catch (Exception e) {

@@ -19,8 +19,7 @@ public class ClientRepository {
     public Optional<Client> save(Client client){
         Optional<Client> clientOptional = Optional.empty();
         try {
-            connection.setAutoCommit(false);
-            String smt = "INSERT INTO clients (name,address,phone,is_professional) VALUES (?,?,?,?)";
+            String smt = "INSERT INTO clients (name, address, phone, is_professional) VALUES (?,?,?,?)";
             PreparedStatement preparedStatement = this.connection.prepareStatement(smt);
             preparedStatement.setString(1,client.getName());
             preparedStatement.setString(2,client.getAddress());
@@ -30,19 +29,8 @@ public class ClientRepository {
             if(rowsInserted > 0) {
                 clientOptional = Optional.of(client);
             }
-        } catch (SQLException e) {
-            try {
-                connection.rollback();
-            } catch (SQLException rollbackEx) {
-                rollbackEx.printStackTrace();
-            }
+        }catch (SQLException e){
             e.printStackTrace();
-        } finally {
-            try {
-                connection.setAutoCommit(true);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
         return clientOptional;
     }
