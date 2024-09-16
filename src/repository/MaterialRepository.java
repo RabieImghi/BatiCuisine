@@ -2,9 +2,13 @@ package repository;
 
 import config.DatabaseConnection;
 import domain.Material;
+import domain.Project;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class MaterialRepository {
@@ -12,7 +16,6 @@ public class MaterialRepository {
 
     public MaterialRepository(){
         this.connection = DatabaseConnection.getInstance().getConnection();
-
     }
 
     public Optional<Material> save(Material material){
@@ -48,5 +51,22 @@ public class MaterialRepository {
             }
         }
         return Optional.empty();
+    }
+    public List<Material> getAll(Project project){
+        List<Material> listMaterials = new ArrayList<>();
+        try {
+            String stmt = "SELECT * FROM materials WHERE project_id = ?";
+            PreparedStatement getStmt = this.connection.prepareStatement(stmt);
+            getStmt.setInt(1, project.getId());
+            ResultSet results = getStmt.executeQuery();
+            while (results.next()){
+                Material material = new Material(results.getString("name"), results.getString("component_type"), results.getDouble("vat_rate"), results.getDouble("unit_cost"), results.getDouble("quantity"), results.getDouble("transport_cost"), results.getDouble("quality_coefficient"));
+                material.setId(results.getInt("id"));
+                listMaterials.add(material);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return listMaterials;
     }
 }
