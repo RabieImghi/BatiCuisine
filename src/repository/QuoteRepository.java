@@ -1,6 +1,7 @@
 package repository;
 
 import config.DatabaseConnection;
+import domain.Project;
 import domain.Quote;
 
 import java.sql.Connection;
@@ -42,6 +43,28 @@ public class QuoteRepository {
             }catch (Exception e){
                 e.printStackTrace();
             }
+        }
+        return Optional.empty();
+    }
+    public Optional<Quote> getByIdProject(Project project){
+        try {
+            String query = "SELECT * FROM quotes WHERE project_id = ?";
+            PreparedStatement getStmt = this.connection.prepareStatement(query);
+            getStmt.setInt(1, project.getId());
+            var result = getStmt.executeQuery();
+            if(result.next()){
+                Quote quote = new Quote(
+                        result.getDouble("estimated_amount"),
+                        result.getDate("issue_date").toLocalDate(),
+                        result.getDate("validity_date").toLocalDate(),
+                        result.getBoolean("accepted"),
+                        project
+                );
+                quote.setId(result.getInt("id"));
+                return Optional.of(quote);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
         return Optional.empty();
     }
