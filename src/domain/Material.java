@@ -1,7 +1,7 @@
 package domain;
 
 public class Material extends Component {
-    private int id;
+    private int idMaterial;
     private double unitCost;
     private double quantity;
     private double transportCost;
@@ -15,11 +15,11 @@ public class Material extends Component {
         this.qualityCoefficient = qualityCoefficient;
     }
 
-    public int getId() {
-        return id;
+    public int getIdMaterial() {
+        return idMaterial;
     }
-    public void setId(int id) {
-        this.id = id;
+    public void setIdMaterial(int id) {
+        this.idMaterial = id;
     }
     public double getUnitCost() {
         return unitCost;
