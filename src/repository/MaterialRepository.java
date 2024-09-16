@@ -12,6 +12,7 @@ public class MaterialRepository {
 
     public MaterialRepository(){
         this.connection = DatabaseConnection.getInstance().getConnection();
+
     }
 
     public Optional<Material> save(Material material){
