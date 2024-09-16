@@ -15,22 +15,38 @@ public class ClientController {
         String address;
         String phone;
         boolean isProfessional;
-        System.out.println("Enter the name of the client: ");
-        name = scanner.nextLine();
-        System.out.println("Enter the address of the client: ");
+        Optional<Client> optionalClient;
+        System.out.println("Enter the information of the client : \n");
+        do {
+            System.out.print("Enter the name of the client: ");
+            name = scanner.nextLine();
+            optionalClient=clientService.getByName(name);
+            if(optionalClient.isPresent()){
+                System.out.println("This client name already exists");
+            }
+        }while (optionalClient.isPresent());
+        System.out.print("Enter the address of the client: ");
         address = scanner.nextLine();
-        System.out.println("Enter the phone number of the client: ");
+        System.out.print("Enter the phone number of the client: ");
         phone = scanner.nextLine();
         System.out.println("Is the client a professional? (yes/no)");
         isProfessional = scanner.nextLine().equals("yes");
         Client client = new Client(name, address, phone, isProfessional);
-        Optional<Client> optionalClient= clientService.save(client);
-        optionalClient.ifPresentOrElse(System.out::println,()-> System.out.println("not added"));
+        optionalClient= clientService.save(client);
+        optionalClient.ifPresentOrElse(client1 -> {
+            System.out.println("Client added successfully");
+        },()-> System.out.println("Client not added"));
         return optionalClient;
     }
     public void getAll(){
         List<Client> clientList= clientService.getAll();
-        clientList.forEach(System.out::println);
+        System.out.printf("\n%-15s | %-20s | %-20s | %-20s%n", "Client Name", "Client Address", "Client Phone", "Is Professional");
+        System.out.println("_________________________________________________________________________________");
+        clientList.forEach(client -> {
+            String isProfessional = client.isProfessional() ? "Professional" : "Not Professional";
+            System.out.printf("%-15s | %-20s | %-20s | %-20s", client.getName(), client.getAddress(), client.getPhone(), isProfessional);
+            System.out.println("\n-------------------------------------------------------------------------------\n");
+        });
     }
     public void  getByName(){
         System.out.println("name : ");

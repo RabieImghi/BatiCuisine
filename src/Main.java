@@ -17,10 +17,8 @@ public class Main {
             String option = scanner.nextLine();
 
             switch (option){
-                case "1": {
-                    clientController.save();
-                }
-                    break;
+                case "1": clientController.save(); break;
+                case "2": clientController.getAll(); break;
                 default:
                     System.out.println("inc");
             }

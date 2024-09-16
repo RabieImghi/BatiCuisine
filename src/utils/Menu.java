@@ -2,7 +2,7 @@ package utils;
 
 public class Menu {
     public void showMenu() {
-        System.out.println("|====================================================+|");
+        System.out.println("\n|====================================================+|");
         System.out.println("|                   Client Management                 |");
         System.out.println("|====================================================+|");
         System.out.println("| [1] Create New Client      [2] Display All Client   |");
