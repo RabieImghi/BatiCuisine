@@ -19,6 +19,8 @@ public class Main {
             switch (option){
                 case "1": clientController.save(); break;
                 case "2": clientController.getAll(); break;
+                case "3": clientController.update(); break;
+                case "4": clientController.delete(); break;
                 default:
                     System.out.println("inc");
             }

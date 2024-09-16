@@ -48,41 +48,57 @@ public class ClientController {
             System.out.println("\n-------------------------------------------------------------------------------\n");
         });
     }
-    public void  getByName(){
-        System.out.println("name : ");
-        String name = scanner.nextLine();
-        Optional<Client> client= clientService.getByName(name);
-        client.ifPresentOrElse(System.out::println, ()-> System.out.println("Not exist"));
-    }
-    public void getById(){
-        System.out.println("Id : ");
-        int id = scanner.nextInt();
-        Optional<Client> client= clientService.getById(id);
-        client.ifPresentOrElse(System.out::println, ()-> System.out.println("Not exist"));
+    public Optional<Client> getClient(){
+        Optional<Client> client = Optional.empty();
+        System.out.println("1 : Search Client By Id");
+        System.out.println("2 : Search Client By Name");
+        System.out.print("Choose an option : ");
+        switch (scanner.nextLine()){
+            case "1" : {
+                System.out.print("Client Id : ");
+                String idClient = scanner.nextLine();
+                client = clientService.getById(Integer.parseInt(idClient));
+                break;
+            }
+            case "2" :{
+                System.out.print("Client Name : ");
+                String nameClient = scanner.nextLine();
+                client = clientService.getByName(nameClient);
+                break;
+            }
+            default:
+                System.out.println("Invalid option");
+        }
+        return client;
     }
     public void update(){
-        System.out.println("Id : ");
-        int id = scanner.nextInt();
-        String defultEntre = scanner.nextLine();
-        Optional<Client> client= clientService.getById(id);
+        Optional<Client> client = getClient();
         client.ifPresentOrElse(client1 -> {
-            System.out.println("Enter the name of the client: ");
-            client1.setName(scanner.nextLine());
-            System.out.println("Enter the address of the client: ");
+            System.out.println("Client Info : "+client1.toString());
+            System.out.println("Enter the new information of the client : \n");
+            System.out.print("New address of the client: ");
             client1.setAddress(scanner.nextLine());
-            System.out.println("Enter the phone number of the client: ");
+            System.out.print("New  phone number of the client: ");
             client1.setPhone(scanner.nextLine());
             Optional<Client> clientOptional= clientService.update(client1);
-            clientOptional.ifPresentOrElse(System.out::println,()-> System.out.println("not update"));
-        },()-> System.out.println("not exi"));
+            clientOptional.ifPresentOrElse(client2 -> {
+                System.out.println("Client Updated with success");
+                }, ()-> System.out.println("Client not updated"));
+        },()-> System.out.println("Client Not found"));
     }
     public void delete(){
-        System.out.println("Id : ");
-        int id = scanner.nextInt();
-        Optional<Client> client= clientService.getById(id);
+        Optional<Client> client= getClient();
         client.ifPresentOrElse(client1 -> {
-            Optional<Client> clientOptional = clientService.delete(client1);
-            clientOptional.ifPresentOrElse(System.out::println,()-> System.out.println("Not delete"));
-        },()-> System.out.println("not found"));
+            System.out.println("Client Info : "+client1.toString());
+            System.out.println("Are you sure you want to delete this client? (yes/no)");
+            if(!scanner.nextLine().equals("yes")){
+                System.out.println("Client Not Deleted");
+            }else {
+                Optional<Client> clientOptional = clientService.delete(client1);
+                clientOptional.ifPresentOrElse(
+                        client2 -> System.out.println("Client deleted with success"),
+                        ()-> System.out.println("Client Not Deleted"));
+            }
+        },()-> System.out.println("Client Not Found"));
     }
 }
