@@ -2,9 +2,13 @@ package repository;
 
 import config.DatabaseConnection;
 import domain.Labor;
+import domain.Project;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class LaborRepository {
@@ -47,6 +51,31 @@ public class LaborRepository {
             }
         }
         return Optional.empty();
+    }
+
+    public List<Labor> getAll(Project project) {
+        List<Labor> labors = new ArrayList<>();
+        try {
+            String stmLabor = "SELECT * FROM labors WHERE project_id = ?";
+            PreparedStatement getStmt = this.connection.prepareStatement(stmLabor);
+            getStmt.setInt(1, project.getId());
+            ResultSet rs = getStmt.executeQuery();
+            while (rs.next()) {
+                Labor labor = new Labor(
+                        rs.getString("name"),
+                        rs.getString("component_type"),
+                        rs.getDouble("vat_rate"),
+                        rs.getDouble("hourly_rate"),
+                        rs.getDouble("hours_worked"),
+                        rs.getDouble("worker_productivity")
+                );
+                labor.setIdLabor(rs.getInt("id"));
+                labors.add(labor);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return labors;
     }
 
 }
