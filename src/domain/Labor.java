@@ -1,0 +1,47 @@
+package domain;
+
+public class Labor extends Component {
+    private int idLabor;
+    private double hourlyRate;
+    private double hoursWorked;
+    private double workerProductivity;
+
+    public Labor(String name, String componentType, double vatRate, double hourlyRate, double hoursWorked, double workerProductivity) {
+        super(name, componentType, vatRate);
+        this.hourlyRate = hourlyRate;
+        this.hoursWorked = hoursWorked;
+        this.workerProductivity = workerProductivity;
+    }
+
+    public int getIdLabor() {
+        return idLabor;
+    }
+
+    public void setIdLabor(int idLabor) {
+        this.idLabor = idLabor;
+    }
+
+    public double getHourlyRate() {
+        return hourlyRate;
+    }
+
+    public void setHourlyRate(double hourlyRate) {
+        this.hourlyRate = hourlyRate;
+    }
+
+    public double getHoursWorked() {
+        return hoursWorked;
+    }
+
+    public void setHoursWorked(double hoursWorked) {
+        this.hoursWorked = hoursWorked;
+    }
+
+    public double getWorkerProductivity() {
+        return workerProductivity;
+    }
+
+    public void setWorkerProductivity(double workerProductivity) {
+        this.workerProductivity = workerProductivity;
+    }
+}
