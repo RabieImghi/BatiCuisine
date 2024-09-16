@@ -15,7 +15,7 @@ public class ProjectRepository {
     public ProjectRepository(){
         connection = DatabaseConnection.getInstance().getConnection();
     }
-    public Optional<Project> save(Project project, Client client){
+    public Optional<Project> save(Project project){
         try {
             this.connection.setAutoCommit(false);
             String query = "INSERT INTO projects (project_name, profit_margin, total_cost,project_status,client_id)" +
@@ -25,7 +25,7 @@ public class ProjectRepository {
             preparedStatement.setDouble(2,project.getProfitMargin());
             preparedStatement.setDouble(3,project.getTotalCost());
             preparedStatement.setString(4,String.valueOf(project.getProjectStatus()));
-            preparedStatement.setInt(5,client.getId());
+            preparedStatement.setInt(5,project.getClient().getId());
             int resultOfInsert = preparedStatement.executeUpdate();
             if(resultOfInsert > 0 ){
                 ResultSet generatedKeys = preparedStatement.getGeneratedKeys();

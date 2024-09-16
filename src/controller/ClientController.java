@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class ClientController {
     public Scanner scanner = new Scanner(System.in);
     private final ClientService clientService = new ClientService();
-    public void save() {
+    public Optional<Client> save() {
         String name;
         String address;
         String phone;
@@ -26,6 +26,7 @@ public class ClientController {
         Client client = new Client(name, address, phone, isProfessional);
         Optional<Client> optionalClient= clientService.save(client);
         optionalClient.ifPresentOrElse(System.out::println,()-> System.out.println("not added"));
+        return optionalClient;
     }
     public void getAll(){
         List<Client> clientList= clientService.getAll();

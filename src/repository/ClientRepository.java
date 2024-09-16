@@ -20,14 +20,19 @@ public class ClientRepository {
         Optional<Client> clientOptional = Optional.empty();
         try {
             String smt = "INSERT INTO clients (name, address, phone, is_professional) VALUES (?,?,?,?)";
-            PreparedStatement preparedStatement = this.connection.prepareStatement(smt);
+            PreparedStatement preparedStatement = this.connection.prepareStatement(smt, PreparedStatement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1,client.getName());
             preparedStatement.setString(2,client.getAddress());
             preparedStatement.setString(3,client.getPhone());
             preparedStatement.setBoolean(4,client.isProfessional());
             int rowsInserted = preparedStatement.executeUpdate();
             if(rowsInserted > 0) {
-                clientOptional = Optional.of(client);
+                ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+                if(generatedKeys.next()){
+                    client.setId(generatedKeys.getInt(1));
+                    clientOptional = Optional.of(client);
+                }
+
             }
         }catch (SQLException e){
             e.printStackTrace();
