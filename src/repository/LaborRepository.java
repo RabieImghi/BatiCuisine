@@ -33,9 +33,12 @@ public class LaborRepository {
             saveStmt.setDouble(7, labor.getWorkerProductivity());
             int results = saveStmt.executeUpdate();
             if (results > 0) {
-                int id = saveStmt.getGeneratedKeys().getInt(1);
-                labor.setIdLabor(id);
-                return Optional.of(labor);
+                ResultSet generatedKeys = saveStmt.getGeneratedKeys();
+                if(generatedKeys.next()){
+                    int id = generatedKeys.getInt(1);
+                    labor.setIdLabor(id);
+                    return Optional.of(labor);
+                }
             }
         } catch (Exception e) {
             try {

@@ -32,6 +32,7 @@ public class MaterialRepository {
             saveStmt.setDouble(7, material.getTransportCost());
             saveStmt.setDouble(8, material.getQualityCoefficient());
             int results = saveStmt.executeUpdate();
+
             if(results > 0){
                 ResultSet generatedKeys = saveStmt.getGeneratedKeys();
                 if(generatedKeys.next()){

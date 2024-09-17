@@ -24,6 +24,7 @@ public class LaborController {
             double hoursWorked = scanner.nextDouble();
             System.out.print("Enter the productivity factor (1.0 = standard, > 1.0 = high productivity): ");
             double workerProductivity = scanner.nextDouble();
+            String def = scanner.nextLine();
             Labor labor = new Labor(name,String.valueOf(ComponentType.LABOR),0,hourlyRate,hoursWorked,workerProductivity,project);
             laborService.save(labor).ifPresentOrElse(labor1 -> {
                 System.out.println("Labor added successfully");

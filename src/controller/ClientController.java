@@ -44,8 +44,8 @@ public class ClientController {
         System.out.println("_________________________________________________________________________________");
         clientList.forEach(client -> {
             String isProfessional = client.isProfessional() ? "Professional" : "Not Professional";
-            System.out.printf("%-15s | %-20s | %-20s | %-20s", client.getName(), client.getAddress(), client.getPhone(), isProfessional);
-            System.out.println("\n-------------------------------------------------------------------------------\n");
+            System.out.printf("%-15s | %-20s | %-20s | %-20s\n", client.getName(), client.getAddress(), client.getPhone(), isProfessional);
+            System.out.println("-------------------------------------------------------------------------------");
         });
     }
 
@@ -56,12 +56,14 @@ public class ClientController {
         System.out.print("Choose an option : ");
         switch (scanner.nextLine()){
             case "1" : {
+                getAll();
                 System.out.print("Client Id : ");
                 String idClient = scanner.nextLine();
                 client = clientService.getById(Integer.parseInt(idClient));
                 break;
             }
             case "2" :{
+                getAll();
                 System.out.print("Client Name : ");
                 String nameClient = scanner.nextLine();
                 client = clientService.getByName(nameClient);

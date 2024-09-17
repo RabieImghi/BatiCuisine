@@ -49,13 +49,13 @@ public class ProjectController {
         Optional<Material> optionalMaterial ;
         do{
             optionalMaterial =  materialController.save(project);
-        }while (optionalMaterial.isEmpty());
+        }while (optionalMaterial.isPresent());
     }
     public void saveLabor(Project project){
         Optional<Labor> optionalLabor;
         do{
             optionalLabor =  laborController.save(project);
-        }while (optionalLabor.isEmpty());
+        }while (optionalLabor.isPresent());
     }
     public Optional<Client> getClient() {
         System.out.println("1 : Search Client ");
@@ -65,9 +65,7 @@ public class ProjectController {
             option = scanner.nextLine();
             switch (option) {
                 case "1": {
-                    System.out.println("Give Me Name Of Client");
-                    String name = scanner.nextLine();
-                    return clientService.getByName(name);
+                    return clientController.getClient();
                 }
                 case "2": {
                     return clientController.save();

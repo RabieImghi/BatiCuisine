@@ -25,6 +25,7 @@ public class MaterialController {
             double transportCost = scanner.nextDouble();
             System.out.print("Enter the material quality coefficient (1.0 = standard, > 1.0 = high quality):");
             double coefficientQuality = scanner.nextDouble();
+            String def = scanner.nextLine();
             Material material = new Material(name,String.valueOf(ComponentType.MATERIAL),0,unitCost,quantity,transportCost,coefficientQuality,project);
             materialService.save(material).ifPresentOrElse(material1 -> {
                 System.out.println("Material added successfully");
