@@ -48,6 +48,9 @@ public class ClientController {
             System.out.println("-------------------------------------------------------------------------------");
         });
     }
+    public Optional<Client> findById(int id){
+        return clientService.getById(id);
+    }
 
     public Optional<Client> getClient(){
         Optional<Client> client = Optional.empty();

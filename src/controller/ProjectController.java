@@ -7,6 +7,7 @@ import domain.Project;
 import service.ClientService;
 import service.ProjectService;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -42,19 +43,84 @@ public class ProjectController {
                     String def = scanner.nextLine();
                     System.out.println("--- Calculation of total cost ---");
                     System.out.print("Would you like to apply VAT to the project? (y/n) : ");
-
                     String vat = scanner.nextLine();
-
                     if(vat.equals("y")){
                         materialController.updateVAT(project1);
-                    }else{
-                        System.out.println("anuules");
                     }
+                    System.out.print("Would you like to apply a profit margin to the project? (y/n) : ");
+                    String profit = scanner.nextLine();
+                    if(profit.equals("y")){
+                        System.out.println("Enter the profit margin percentage (%) : ");
+                        double profitMargin = scanner.nextDouble();
+                        projectService.updateProfitMargin(project1, profitMargin);
+                    }
+                    System.out.println("Cost calculation in progress...");
+                    calculateTotalCost(project1);
                 },()-> System.out.println("Project not added"));
             }else {
                 System.out.println("Project Add Cancelled");
             }
         } );
+    }
+    public void calculateTotalCost(Project project){
+        Optional<Client> clients = clientController.findById(project.getClient().getId());
+        clients.ifPresentOrElse(client -> {
+            double totalCostMaterial = 0;
+            double totalCostLabor = 0;
+            double totalCost = 0;
+            System.out.println("Client Name : " + client.getName());
+            System.out.println("Client Address : " + client.getAddress());
+            System.out.println("Client Phone : " + client.getPhone());
+            System.out.println("Cost Detail --- ---");
+            System.out.println("1. Materials: ");
+            List<Material> listMaterial = materialController.getAll(project);
+            double vat = (listMaterial.get(0).getVatRate()/100)+1;
+            totalCostMaterial= materialController.totalCostMaterial(listMaterial);
+            System.out.printf("%-15s | %-20s | %-20s | %-20s | %-20s | %-20s | %-20s%n",
+                    "Material Name", "Component Type", "VAT Rate", "Unit Cost", "Quantity",
+                    "Transport Cost", "Quality Coefficient");
+            listMaterial.forEach(material -> {
+                System.out.println("____________________________________________________________________________________________________________________________________________________");
+                System.out.printf("%-15s | %-20s | %-20s | %-20s | %-20s | %-20s | %-20s\n",
+                        material.getName(), material.getComponentType(), material.getVatRate(),
+                        material.getUnitCost(), material.getQuantity(), material.getTransportCost(),
+                        material.getQualityCoefficient());
+                System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------");
+            });
+            System.out.println("**Total cost of materials before VAT: " + totalCostMaterial + " €");
+            System.out.println("**Total cost of materials with VAT ("+(vat*100-1)+"%): " + totalCostMaterial * vat + " €");
+
+
+            List<Labor> listLabor = laborController.getAll(project);
+            System.out.println("2. Labor: ");
+            System.out.printf("%-15s | %-20s | %-20s | %-20s | %-20s | %-20s%n",
+                    "Labor Type", "Component Type", "VAT Rate", "Hourly Rate", "Hours Worked",
+                    "Productivity Worker");
+            totalCostLabor = laborController.totalCostLabor(listLabor);
+            listLabor.forEach(labor -> {
+                System.out.println("____________________________________________________________________________________________________________________________________________________");
+                System.out.printf("%-15s | %-20s | %-20s | %-20s | %-20s | %-20s\n",
+                        labor.getName(), labor.getComponentType(), labor.getVatRate(),
+                        labor.getHourlyRate(), labor.getHoursWorked(), labor.getWorkerProductivity()
+                       );
+                System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------");
+            });
+
+            System.out.println("**Total labor cost before VAT: " + totalCostLabor + " €");
+            System.out.println("**Total labor cost with VAT ("+(vat*100-1)+"%): " + totalCostLabor * vat + " €");
+
+            totalCost = (totalCostLabor * vat) + (totalCostMaterial * vat );
+            double totalCostTva = totalCost * project.getProfitMargin()/100;
+            System.out.println("3. Total cost before margin: " + totalCost+ " €");
+            System.out.println("4. Profit margin ("+project.getProfitMargin()+") : "+ totalCostTva + " €");
+
+            System.out.println("**Coût total final du projet : "+ (totalCostTva+totalCost) + " €");
+        },()->{
+
+        });
+
+
+
     }
     public void saveMaterial(Project project){
         Optional<Material> optionalMaterial ;

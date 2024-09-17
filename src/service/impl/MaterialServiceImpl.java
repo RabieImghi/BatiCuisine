@@ -11,4 +11,5 @@ public interface MaterialServiceImpl {
 
     public List<Material> getAll(Project project);
     public void updateVAT(Project project, double vatRate);
+    public double totalCostMaterial(List<Material> listMaterial);
 }

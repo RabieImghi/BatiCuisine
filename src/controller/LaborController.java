@@ -6,6 +6,7 @@ import domain.Project;
 import service.LaborService;
 import utils.ComponentType;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -35,5 +36,11 @@ public class LaborController {
             return Optional.empty();
         }
 
+    }
+    public List<Labor> getAll(Project project){
+        return laborService.getAll(project);
+    }
+    public double totalCostLabor(List<Labor> listMaterial){
+        return laborService.totalCostLabor(listMaterial);
     }
 }

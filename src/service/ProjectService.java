@@ -1,6 +1,7 @@
 package service;
 
 import domain.Client;
+import domain.Material;
 import domain.Project;
 import repository.ProjectRepository;
 import service.impl.ProjectServiceImpl;
@@ -12,4 +13,7 @@ public class ProjectService  implements ProjectServiceImpl {
         return projectRepository.save(project);
     }
 
+    public void updateProfitMargin(Project project, double profitMargin) {
+        projectRepository.updateProfitMargin(project, profitMargin);
+    }
 }

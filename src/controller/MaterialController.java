@@ -5,6 +5,7 @@ import domain.Project;
 import service.MaterialService;
 import utils.ComponentType;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -43,6 +44,13 @@ public class MaterialController {
         System.out.print("Enter the VAT rate : ");
         double vatRate = scanner.nextDouble();
         materialService.updateVAT(project,vatRate);
+    }
+
+    public List<Material> getAll(Project project){
+        return materialService.getAll(project);
+    }
+    public double totalCostMaterial(List<Material> listMaterial){
+        return materialService.totalCostMaterial(listMaterial);
     }
 
 

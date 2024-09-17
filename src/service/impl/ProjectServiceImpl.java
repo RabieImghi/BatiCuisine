@@ -8,4 +8,5 @@ import java.util.Optional;
 
 public interface ProjectServiceImpl {
     public Optional<Project> save(Project project);
+    public void updateProfitMargin(Project project, double profitMargin);
 }

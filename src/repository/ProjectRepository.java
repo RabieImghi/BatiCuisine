@@ -49,4 +49,26 @@ public class ProjectRepository {
         }
         return Optional.empty();
     }
+    public void updateProfitMargin(Project project, double profitMargin){
+        try {
+            this.connection.setAutoCommit(false);
+            String update = "UPDATE projects SET profit_margin = ? WHERE id = ?";
+            PreparedStatement updateStm = this.connection.prepareStatement(update);
+            updateStm.setDouble(1,profitMargin);
+            updateStm.setInt(2,project.getId());
+            updateStm.executeUpdate();
+        }catch (SQLException e){
+            try {
+                this.connection.rollback();
+            }catch (SQLException e2){
+                e2.printStackTrace();
+            }
+        }finally {
+            try {
+                this.connection.setAutoCommit(true);
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+    }
 }
