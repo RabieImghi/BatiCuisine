@@ -39,6 +39,11 @@ public class MaterialController {
         }
 
     }
+    public void updateVAT(Project project){
+        System.out.print("Enter the VAT rate : ");
+        double vatRate = scanner.nextDouble();
+        materialService.updateVAT(project,vatRate);
+    }
 
 
 }

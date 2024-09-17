@@ -7,6 +7,7 @@ import domain.Project;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -80,5 +81,27 @@ public class MaterialRepository {
             e.printStackTrace();
         }
         return listMaterials;
+    }
+    public void updateVAT(Project project,double vatRate){
+        try {
+            this.connection.setAutoCommit(false);
+            String stmUpdate = "UPDATE components SET vat_rate = ? WHERE project_id = ?";
+            PreparedStatement save = this.connection.prepareStatement(stmUpdate);
+            save.setDouble(1,vatRate);
+            save.setInt(2,project.getId());
+            int res = save.executeUpdate();
+        }catch (SQLException e){
+            try {
+                this.connection.rollback();
+            }catch (SQLException e2){
+                e2.printStackTrace();
+            }
+        }finally {
+            try {
+                this.connection.setAutoCommit(true);
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
     }
 }

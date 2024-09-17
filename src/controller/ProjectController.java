@@ -39,6 +39,17 @@ public class ProjectController {
                     System.out.println("Project added successfully");
                     saveMaterial(project1);
                     saveLabor(project1);
+                    String def = scanner.nextLine();
+                    System.out.println("--- Calculation of total cost ---");
+                    System.out.print("Would you like to apply VAT to the project? (y/n) : ");
+
+                    String vat = scanner.nextLine();
+
+                    if(vat.equals("y")){
+                        materialController.updateVAT(project1);
+                    }else{
+                        System.out.println("anuules");
+                    }
                 },()-> System.out.println("Project not added"));
             }else {
                 System.out.println("Project Add Cancelled");
