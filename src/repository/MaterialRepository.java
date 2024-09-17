@@ -33,9 +33,12 @@ public class MaterialRepository {
             saveStmt.setDouble(8, material.getQualityCoefficient());
             int results = saveStmt.executeUpdate();
             if(results > 0){
-                int id = saveStmt.getGeneratedKeys().getInt(1);
-                material.setId(id);
-                return Optional.of(material);
+                ResultSet generatedKeys = saveStmt.getGeneratedKeys();
+                if(generatedKeys.next()){
+                    int id = generatedKeys.getInt(1);
+                    material.setId(id);
+                    return Optional.of(material);
+                }
             }
         }catch (Exception e){
             try {
@@ -60,7 +63,15 @@ public class MaterialRepository {
             getStmt.setInt(1, project.getId());
             ResultSet results = getStmt.executeQuery();
             while (results.next()){
-                Material material = new Material(results.getString("name"), results.getString("component_type"), results.getDouble("vat_rate"), results.getDouble("unit_cost"), results.getDouble("quantity"), results.getDouble("transport_cost"), results.getDouble("quality_coefficient"));
+                Material material = new Material(
+                        results.getString("name"),
+                        results.getString("component_type"),
+                        results.getDouble("vat_rate"),
+                        results.getDouble("unit_cost"),
+                        results.getDouble("quantity"),
+                        results.getDouble("transport_cost"),
+                        results.getDouble("quality_coefficient"),
+                        project);
                 material.setId(results.getInt("id"));
                 listMaterials.add(material);
             }

@@ -6,10 +6,11 @@ public class Component {
     private double vatRate;
     private Project project;
 
-    public Component(String name, String componentType, double vatRate) {
+    public Component(String name, String componentType, double vatRate,Project project) {
         this.name = name;
         this.componentType = componentType;
         this.vatRate = vatRate;
+        this.project = project;
     }
 
     public int getId() {

@@ -8,7 +8,7 @@ import java.util.Optional;
 import java.util.Scanner;
 
 public class ClientController {
-    public Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in);
     private final ClientService clientService = new ClientService();
     public Optional<Client> save() {
         String name;
@@ -48,6 +48,7 @@ public class ClientController {
             System.out.println("\n-------------------------------------------------------------------------------\n");
         });
     }
+
     public Optional<Client> getClient(){
         Optional<Client> client = Optional.empty();
         System.out.println("1 : Search Client By Id");

@@ -67,7 +67,8 @@ public class LaborRepository {
                         rs.getDouble("vat_rate"),
                         rs.getDouble("hourly_rate"),
                         rs.getDouble("hours_worked"),
-                        rs.getDouble("worker_productivity")
+                        rs.getDouble("worker_productivity"),
+                        project
                 );
                 labor.setIdLabor(rs.getInt("id"));
                 labors.add(labor);

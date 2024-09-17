@@ -21,6 +21,9 @@ public class Main {
                 case "2": clientController.getAll(); break;
                 case "3": clientController.update(); break;
                 case "4": clientController.delete(); break;
+
+                case "5": projectController.save(); break;
+                case "0": exit = true; break;
                 default:
                     System.out.println("inc");
             }
