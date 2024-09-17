@@ -23,6 +23,7 @@ public class Main {
                 case "4": clientController.delete(); break;
 
                 case "5": projectController.save(); break;
+                case "6": projectController.getAll(); break;
                 case "0": exit = true; break;
                 default:
                     System.out.println("inc");

@@ -53,18 +53,20 @@ public class ProjectController {
                         System.out.println("Enter the profit margin percentage (%) : ");
                         double profitMargin = scanner.nextDouble();
                         projectService.updateProfitMargin(project1, profitMargin);
+                        project1.setProfitMargin(profitMargin);
                     }
                     System.out.println("Cost calculation in progress...");
-                    calculateTotalCost(project1);
+                    calculateTotalCost(project1,1);
                 },()-> System.out.println("Project not added"));
             }else {
                 System.out.println("Project Add Cancelled");
             }
         } );
     }
-    public void calculateTotalCost(Project project){
+    public void calculateTotalCost(Project project,int isRunung){
+
         Optional<Client> clients = clientController.findById(project.getClient().getId());
-        clients.ifPresentOrElse(client -> {
+        clients.ifPresent(client -> {
             double totalCostMaterial = 0;
             double totalCostLabor = 0;
             double totalCost = 0;
@@ -88,7 +90,7 @@ public class ProjectController {
                 System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------");
             });
             System.out.println("**Total cost of materials before VAT: " + totalCostMaterial + " €");
-            System.out.println("**Total cost of materials with VAT ("+(vat*100-1)+"%): " + totalCostMaterial * vat + " €");
+            System.out.println("**Total cost of materials with VAT ("+listMaterial.get(0).getVatRate()+"%): " + totalCostMaterial * vat + " €");
 
 
             List<Labor> listLabor = laborController.getAll(project);
@@ -107,7 +109,7 @@ public class ProjectController {
             });
 
             System.out.println("**Total labor cost before VAT: " + totalCostLabor + " €");
-            System.out.println("**Total labor cost with VAT ("+(vat*100-1)+"%): " + totalCostLabor * vat + " €");
+            System.out.println("**Total labor cost with VAT ("+(vat-1)*100+"%): " + totalCostLabor * vat + " €");
 
             totalCost = (totalCostLabor * vat) + (totalCostMaterial * vat );
             double totalCostTva = totalCost * project.getProfitMargin()/100;
@@ -115,12 +117,9 @@ public class ProjectController {
             System.out.println("4. Profit margin ("+project.getProfitMargin()+") : "+ totalCostTva + " €");
 
             System.out.println("**Coût total final du projet : "+ (totalCostTva+totalCost) + " €");
-        },()->{
-
+            double totalCostTva2 = totalCostTva + totalCost;
+            if(isRunung == 1) projectService.updateProfitCost(project,totalCostTva2 );
         });
-
-
-
     }
     public void saveMaterial(Project project){
         Optional<Material> optionalMaterial ;
@@ -154,5 +153,18 @@ public class ProjectController {
         } while (!option.equals("1") && !option.equals("2"));
     }
 
+    public void getAll(){
+        List<Project> projectList = projectService.getAll();
+        if(projectList.isEmpty()){
+            System.out.println("No project found");
+        }else {
+            System.out.printf("\n%-15s |%-15s | %-20s | %-20s | %-20s%n","Project Id", "Client Name", "Project Name", "Profit Margin", "Total Cost");
+            System.out.println("_________________________________________________________________________________");
+            projectList.forEach(project -> {
+                System.out.printf("%-15d | %-15s | %-20s | %-20s | %-20s\n",project.getId(), project.getClient().getName(), project.getProjectName(), project.getProfitMargin(), project.getTotalCost());
+                System.out.println("-------------------------------------------------------------------------------");
+            });
+        }
+    }
 
 }

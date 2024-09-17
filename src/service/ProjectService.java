@@ -5,6 +5,8 @@ import domain.Material;
 import domain.Project;
 import repository.ProjectRepository;
 import service.impl.ProjectServiceImpl;
+
+import java.util.List;
 import java.util.Optional;
 
 public class ProjectService  implements ProjectServiceImpl {
@@ -15,5 +17,11 @@ public class ProjectService  implements ProjectServiceImpl {
 
     public void updateProfitMargin(Project project, double profitMargin) {
         projectRepository.updateProfitMargin(project, profitMargin);
+    }
+    public void updateProfitCost(Project project, double totalCost){
+        projectRepository.updateProfitCost(project,totalCost);
+    }
+    public List<Project> getAll(){
+        return projectRepository.getAll();
     }
 }
