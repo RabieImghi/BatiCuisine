@@ -24,4 +24,7 @@ public class ProjectService  implements ProjectServiceImpl {
     public List<Project> getAll(){
         return projectRepository.getAll();
     }
+    public Optional<Project> getById(int id){
+        return projectRepository.getById(id);
+    }
 }

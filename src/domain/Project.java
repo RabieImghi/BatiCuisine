@@ -66,6 +66,15 @@ public class Project {
         this.client = client;
     }
 
-
-
+    @Override
+    public String toString() {
+        return "Project{" +
+                "id=" + id +
+                ", projectName='" + projectName + '\'' +
+                ", profitMargin=" + profitMargin +
+                ", totalCost=" + totalCost +
+                ", projectStatus=" + projectStatus +
+                ", client=" + client +
+                '}';
+    }
 }

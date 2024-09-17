@@ -122,4 +122,31 @@ public class ProjectRepository {
         }
         return projects;
     }
+
+    public Optional<Project> getById(int id){
+        try {
+            String query = "SELECT * FROM projects INNER JOIN clients on clients.id = projects.client_id WHERE projects.id = ?";
+            PreparedStatement preparedStatement = this.connection.prepareStatement(query);
+            preparedStatement.setInt(1,id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()){
+                Client client = new Client(
+                        resultSet.getString("name"),
+                        resultSet.getString("address"),
+                        resultSet.getString("phone"),
+                        resultSet.getBoolean("is_professional"));
+                client.setId(resultSet.getInt("client_id"));
+
+                Project project = new Project(resultSet.getString("project_name"),client);
+                project.setId(resultSet.getInt("id"));
+                project.setProfitMargin(resultSet.getDouble("profit_margin"));
+                project.setTotalCost(resultSet.getDouble("total_cost"));
+                project.setProjectStatus(ProjectStatus.valueOf(resultSet.getString("project_status")));
+                return Optional.of(project);
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return Optional.empty();
+    }
 }

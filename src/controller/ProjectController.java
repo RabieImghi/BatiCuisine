@@ -10,6 +10,7 @@ import service.ProjectService;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class ProjectController {
 
@@ -64,7 +65,6 @@ public class ProjectController {
         } );
     }
     public void calculateTotalCost(Project project,int isRunung){
-
         Optional<Client> clients = clientController.findById(project.getClient().getId());
         clients.ifPresent(client -> {
             double totalCostMaterial = 0;
@@ -109,7 +109,7 @@ public class ProjectController {
             });
 
             System.out.println("**Total labor cost before VAT: " + totalCostLabor + " €");
-            System.out.println("**Total labor cost with VAT ("+(vat-1)*100+"%): " + totalCostLabor * vat + " €");
+            System.out.println("**Total labor cost with VAT ("+listMaterial.get(0).getVatRate()+"%): " + totalCostLabor * vat + " €");
 
             totalCost = (totalCostLabor * vat) + (totalCostMaterial * vat );
             double totalCostTva = totalCost * project.getProfitMargin()/100;
@@ -120,6 +120,17 @@ public class ProjectController {
             double totalCostTva2 = totalCostTva + totalCost;
             if(isRunung == 1) projectService.updateProfitCost(project,totalCostTva2 );
         });
+        System.out.println("nnn");
+    }
+    public void calculateCost(){
+        getAll();
+        System.out.print("Enter the project id : ");
+        int id = scanner.nextInt();
+        Optional<Project> optionalProject = projectService.getById(id);
+        optionalProject.ifPresentOrElse(project -> {
+            System.out.println(project);
+            calculateTotalCost(project,0);
+        },()-> System.out.println("Project not found"));
     }
     public void saveMaterial(Project project){
         Optional<Material> optionalMaterial ;
