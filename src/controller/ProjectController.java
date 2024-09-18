@@ -1,15 +1,11 @@
 package controller;
 
-import domain.Client;
-import domain.Labor;
-import domain.Material;
-import domain.Project;
+import domain.*;
 import service.ClientService;
 import service.ProjectService;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Scanner;
+import java.time.LocalDate;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ProjectController {
@@ -19,6 +15,7 @@ public class ProjectController {
     private final ClientController clientController = new ClientController();
     private final MaterialController materialController = new MaterialController();
     private final LaborController laborController = new LaborController();
+    private final QuoteController quoteController = new QuoteController();
 
     private final Scanner scanner = new Scanner(System.in);
     public void save() {
@@ -34,8 +31,6 @@ public class ProjectController {
             if(option.equals("yes")){
                 System.out.println("Project Name");
                 String name = scanner.nextLine();
-                System.out.println("Surface Cuisine");
-                double surfaceCuisine = scanner.nextDouble();
                 Project project = new Project(name, client);
                 projectService.save(project).ifPresentOrElse(project1 -> {
                     System.out.println("Project added successfully");
@@ -118,9 +113,25 @@ public class ProjectController {
 
             System.out.println("**Coût total final du projet : "+ (totalCostTva+totalCost) + " €");
             double totalCostTva2 = totalCostTva + totalCost;
-            if(isRunung == 1) projectService.updateProfitCost(project,totalCostTva2 );
+
+            if(isRunung == 1) {
+                projectService.updateProfitCost(project,totalCostTva2 );
+                System.out.print("Would you like to add Quote ? (y/n) : ");
+                String quote = scanner.nextLine();
+                if(quote.equals("y")){
+                    System.out.println("Enter the quote issue date (format: dd/mm/yyyy) : ");
+                    LocalDate issueDate = LocalDate.parse(scanner.nextLine());
+                    System.out.println("Enter the validity date of the quote (format: dd/mm/yyyy) : ");
+                    LocalDate validityDate = LocalDate.parse(scanner.nextLine());
+                    System.out.println("Would you like to save the quote? (y/n) : ");
+                    if(scanner.nextLine().equals("y")){
+                        Quote quote1 = new Quote(totalCostTva2,issueDate,validityDate,false,project);
+                        Optional<Quote> quote2 = quoteController.save(quote1);
+                        quote2.ifPresent(quote3 -> System.out.println("Quote added with success"));
+                    }
+                }
+            }
         });
-        System.out.println("nnn");
     }
     public void calculateCost(){
         getAll();
