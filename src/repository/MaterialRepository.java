@@ -7,6 +7,7 @@ import domain.Project;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -32,10 +33,14 @@ public class MaterialRepository {
             saveStmt.setDouble(7, material.getTransportCost());
             saveStmt.setDouble(8, material.getQualityCoefficient());
             int results = saveStmt.executeUpdate();
+
             if(results > 0){
-                int id = saveStmt.getGeneratedKeys().getInt(1);
-                material.setId(id);
-                return Optional.of(material);
+                ResultSet generatedKeys = saveStmt.getGeneratedKeys();
+                if(generatedKeys.next()){
+                    int id = generatedKeys.getInt(1);
+                    material.setId(id);
+                    return Optional.of(material);
+                }
             }
         }catch (Exception e){
             try {
@@ -60,7 +65,15 @@ public class MaterialRepository {
             getStmt.setInt(1, project.getId());
             ResultSet results = getStmt.executeQuery();
             while (results.next()){
-                Material material = new Material(results.getString("name"), results.getString("component_type"), results.getDouble("vat_rate"), results.getDouble("unit_cost"), results.getDouble("quantity"), results.getDouble("transport_cost"), results.getDouble("quality_coefficient"));
+                Material material = new Material(
+                        results.getString("name"),
+                        results.getString("component_type"),
+                        results.getDouble("vat_rate"),
+                        results.getDouble("unit_cost"),
+                        results.getDouble("quantity"),
+                        results.getDouble("transport_cost"),
+                        results.getDouble("quality_coefficient"),
+                        project);
                 material.setId(results.getInt("id"));
                 listMaterials.add(material);
             }
@@ -68,5 +81,27 @@ public class MaterialRepository {
             e.printStackTrace();
         }
         return listMaterials;
+    }
+    public void updateVAT(Project project,double vatRate){
+        try {
+            this.connection.setAutoCommit(false);
+            String stmUpdate = "UPDATE components SET vat_rate = ? WHERE project_id = ?";
+            PreparedStatement save = this.connection.prepareStatement(stmUpdate);
+            save.setDouble(1,vatRate);
+            save.setInt(2,project.getId());
+            int res = save.executeUpdate();
+        }catch (SQLException e){
+            try {
+                this.connection.rollback();
+            }catch (SQLException e2){
+                e2.printStackTrace();
+            }
+        }finally {
+            try {
+                this.connection.setAutoCommit(true);
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
     }
 }

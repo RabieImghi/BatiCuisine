@@ -17,19 +17,18 @@ public class Main {
             String option = scanner.nextLine();
 
             switch (option){
-                case "1" : clientController.save();break;
-                case "2" : clientController.getAll();break;
-                case "3" : clientController.getByName(); break;
-                case "4" : clientController.getById(); break;
-                case "5" : clientController.update();
-                case "6" : clientController.delete();
-                case "8" : projectController.save();break;
+                case "1": clientController.save(); break;
+                case "2": clientController.getAll(); break;
+                case "3": clientController.update(); break;
+                case "4": clientController.delete(); break;
+
+                case "5": projectController.save(); break;
+                case "6": projectController.getAll(); break;
+                case "7": projectController.calculateCost(); break;
+                case "10": exit = true; break;
                 default:
-                    System.out.println("inc");
+                    System.out.println("Chois Incorect");
             }
-
-
-
         }while (!exit);
     }
 }

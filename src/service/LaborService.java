@@ -17,4 +17,7 @@ public class LaborService implements LaborServiceImpl {
     public List<Labor> getAll(Project project) {
         return laborRepository.getAll(project);
     }
+    public double totalCostLabor(List<Labor> listMaterial){
+        return listMaterial.stream().mapToDouble(labor -> labor.getHourlyRate() * labor.getHoursWorked() * labor.getWorkerProductivity() ).sum();
+    }
 }
