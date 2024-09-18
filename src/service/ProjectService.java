@@ -30,5 +30,8 @@ public class ProjectService  implements ProjectServiceImpl {
     public void delete(Project project){
         projectRepository.delete(project);
     }
+    public void update(Project project){
+        projectRepository.update(project);
+    }
 
 }

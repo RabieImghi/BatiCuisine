@@ -3,6 +3,7 @@ package repository;
 import config.DatabaseConnection;
 import domain.Labor;
 import domain.Project;
+import repository.impl.LaborRepositoryImpl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,12 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class LaborRepository {
-    private Connection connection;
+public class LaborRepository implements LaborRepositoryImpl {
+    private final Connection connection;
     public LaborRepository() {
         this.connection = DatabaseConnection.getInstance().getConnection();
     }
 
+    @Override
     public Optional<Labor> save(Labor labor) {
         try {
             this.connection.setAutoCommit(false);
@@ -56,6 +58,7 @@ public class LaborRepository {
         return Optional.empty();
     }
 
+    @Override
     public List<Labor> getAll(Project project) {
         List<Labor> labors = new ArrayList<>();
         try {

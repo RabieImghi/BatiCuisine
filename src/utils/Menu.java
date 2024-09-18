@@ -11,7 +11,7 @@ public class Menu {
         System.out.println("|                   Project Management                |");
         System.out.println("|=====================================================|");
         System.out.println("| [5] Manage Project         [6] Display All Project  |");
-        System.out.println("| [7] Calculate The Cost Of A Project                 |");
+        System.out.println("| [7] Add New Quote                                   |");
         System.out.println("|=====================================================|");
         System.out.println("|                     Material / Labor                |");
         System.out.println("|=====================================================|");

@@ -30,7 +30,7 @@ public class ProjectController {
             switch (option){
                 case "1": save(); break;
                 case "2": deleteProject(); break;
-                case "3": updateProject; break;
+                case "3": updateProject(); break;
                 case "4": exit = true; break;
                 default:
                     System.out.println("Invalid option");
@@ -139,32 +139,13 @@ public class ProjectController {
                 System.out.print("Would you like to add Quote ? (y/n) : ");
                 String quote = scanner.nextLine();
                 if(quote.equals("y")){
-                    System.out.println("Enter the quote issue date (format: dd/mm/yyyy) : ");
-                    LocalDate issueDate = LocalDate.parse(scanner.nextLine());
-                    System.out.println("Enter the validity date of the quote (format: dd/mm/yyyy) : ");
-                    LocalDate validityDate = LocalDate.parse(scanner.nextLine());
-                    System.out.println("Would you like to save the quote? (y/n) : ");
-                    if(scanner.nextLine().equals("y")){
-                        Quote quote1 = new Quote(totalCostTva2,issueDate,validityDate,false,project);
-                        Optional<Quote> quote2 = quoteController.save(quote1);
-                        quote2.ifPresent(quote3 -> System.out.println("Quote added with success"));
-                    }
+                    quoteController.save(project,totalCostTva2);
                 }
             }
         });
     }
     public void updateCost(Project project,double cost){
         projectService.updateProfitCost(project,cost);
-    }
-    public void calculateCost(){
-        getAll();
-        System.out.print("Enter the project id : ");
-        int id = scanner.nextInt();
-        Optional<Project> optionalProject = projectService.getById(id);
-        optionalProject.ifPresentOrElse(project -> {
-            System.out.println(project);
-            calculateTotalCost(project,0);
-        },()-> System.out.println("Project not found"));
     }
     public double totalCostProject(Project project){
         List<Material> listMaterial = materialController.getAll(project);
@@ -241,6 +222,7 @@ public class ProjectController {
         getAll();
         System.out.print("Enter the project id to delete : ");
         int id = scanner.nextInt();
+        scanner.nextLine();
         Optional<Project> project = projectService.getById(id);
         project.ifPresentOrElse(project1 -> {
             System.out.println("Are you sure you want to delete the project? (yes/no) : ");
@@ -249,6 +231,69 @@ public class ProjectController {
                 projectService.delete(project1);
                 System.out.println("Project deleted with success");
             }
+        },()-> System.out.println("Project not found"));
+    }
+    public void updateProject(){
+        getAll();
+        System.out.print("Enter the project id to update : ");
+        int id = scanner.nextInt();
+        scanner.nextLine();
+
+        Optional<Project> project = projectService.getById(id);
+        project.ifPresentOrElse(project1 -> {
+            String option;
+            do {
+                System.out.println("1 : Update Project Name");
+                System.out.println("2 : Update Project Status");
+                System.out.println("3 : Update Profit Margin");
+                System.out.println("4 : Exit");
+                option = scanner.nextLine();
+                switch (option){
+                    case "1": {
+                        System.out.print("Enter the new project name : ");
+                        String name = scanner.nextLine();
+                        project1.setProjectName(name);
+                        projectService.update(project1);
+                        break;
+                    }
+                    case "2": {
+                        String status;
+                        do {
+                            System.out.println("Enter the new project status (In Progress/Completed) : ");
+                            System.out.println("1 : In Progress");
+                            System.out.println("2 : Completed");
+                            System.out.println("3 : Cancel");
+                            System.out.println("4 : Exit");
+                            status = scanner.nextLine();
+                            switch (status) {
+                                case "1":
+                                    project1.setProjectStatus(ProjectStatus.IN_PROGRESS);
+                                    break;
+                                case "2":
+                                    project1.setProjectStatus(ProjectStatus.COMPLETED);
+                                    break;
+                                case "3":
+                                    project1.setProjectStatus(ProjectStatus.CANCELED);
+                                    break;
+                                default:
+                                    System.out.println("Invalid option");
+                            }
+                        }while (!status.equals("1") && !status.equals("2") && !status.equals("3") && !status.equals("4"));
+                        projectService.update(project1);
+                        break;
+                    }
+                    case "3": {
+                        System.out.print("Enter the new profit margin : ");
+                        double profitMargin = scanner.nextDouble();
+                        projectService.updateProfitMargin(project1,profitMargin);
+                        break;
+                    }
+                    case "4": break;
+                    default:
+                        System.out.println("Invalid option");
+                }
+            }while (!option.equals("4"));
+
         },()-> System.out.println("Project not found"));
     }
 

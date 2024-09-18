@@ -2,6 +2,7 @@ package repository;
 
 import config.DatabaseConnection;
 import domain.Client;
+import repository.impl.ClientRepositoryImpl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class ClientRepository {
+public class ClientRepository implements ClientRepositoryImpl {
     private final Connection connection;
     public ClientRepository() {
         this.connection = DatabaseConnection.getInstance().getConnection();

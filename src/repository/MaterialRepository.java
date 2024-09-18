@@ -3,6 +3,7 @@ package repository;
 import config.DatabaseConnection;
 import domain.Material;
 import domain.Project;
+import repository.impl.MaterialRepositoryImpl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,13 +13,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class MaterialRepository {
+public class MaterialRepository implements MaterialRepositoryImpl {
     private final Connection connection;
 
     public MaterialRepository(){
         this.connection = DatabaseConnection.getInstance().getConnection();
     }
 
+    @Override
     public Optional<Material> save(Material material){
         try {
             this.connection.setAutoCommit(false);
@@ -57,6 +59,7 @@ public class MaterialRepository {
         }
         return Optional.empty();
     }
+    @Override
     public List<Material> getAll(Project project){
         List<Material> listMaterials = new ArrayList<>();
         try {
@@ -82,7 +85,8 @@ public class MaterialRepository {
         }
         return listMaterials;
     }
-    public void updateVAT(Project project,double vatRate){
+    @Override
+    public void updateVAT(Project project, double vatRate){
         try {
             this.connection.setAutoCommit(false);
             String stmUpdate = "UPDATE components SET vat_rate = ? WHERE project_id = ?";

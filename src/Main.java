@@ -1,7 +1,4 @@
-import controller.ClientController;
-import controller.LaborController;
-import controller.MaterialController;
-import controller.ProjectController;
+import controller.*;
 import repository.ClientRepository;
 import utils.Menu;
 
@@ -14,6 +11,7 @@ public class Main {
     static LaborController laborController = new LaborController();
     static MaterialController materialController = new MaterialController();
     static ProjectController projectController = new ProjectController();
+    static QuoteController quoteController = new QuoteController();
     public static void main(String[] args) {
         boolean exit = false;
         do{
@@ -28,7 +26,7 @@ public class Main {
 
                 case "5": projectController.manageProject(); break;
                 case "6": projectController.getAll(); break;
-                case "7": projectController.calculateCost(); break;
+                case "7": quoteController.addQuoteMenu(); break;
                 case "8": materialController.saveNewMaterial(); break;
                 case "9": laborController.saveNewLabor(); break;
                 case "10": exit = true; break;
