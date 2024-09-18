@@ -43,4 +43,21 @@ public class LaborController {
     public double totalCostLabor(List<Labor> listMaterial){
         return laborService.totalCostLabor(listMaterial);
     }
+    public void saveNewLabor(){
+        Optional<Project> project ;
+        int id=0;
+        do {
+            ProjectController projectController = new ProjectController();
+            projectController.getAll();
+            System.out.print("Enter the project id to add a labor: ");
+            id = scanner.nextInt();
+            project = projectController.getById(id);
+            project.ifPresentOrElse(project1 -> {
+                save(project1);
+                double totalCost = projectController.totalCostProject(project1);
+                projectController.updateCost(project1,totalCost);
+            },()-> System.out.println("Project not found"));
+        }while (project.isEmpty());
+        save(project.get());
+    }
 }

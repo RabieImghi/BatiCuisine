@@ -12,4 +12,6 @@ public interface ProjectServiceImpl {
     public void updateProfitCost(Project project, double totalCost);
     public List<Project> getAll();
     public Optional<Project> getById(int id);
+    public void delete(Project project);
+    public void update(Project project);
 }

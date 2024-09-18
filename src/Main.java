@@ -1,5 +1,4 @@
-import controller.ClientController;
-import controller.ProjectController;
+import controller.*;
 import repository.ClientRepository;
 import utils.Menu;
 
@@ -9,7 +8,10 @@ public class Main {
     static Menu menu = new Menu();
     static Scanner scanner = new Scanner(System.in);
     static ClientController clientController = new ClientController();
+    static LaborController laborController = new LaborController();
+    static MaterialController materialController = new MaterialController();
     static ProjectController projectController = new ProjectController();
+    static QuoteController quoteController = new QuoteController();
     public static void main(String[] args) {
         boolean exit = false;
         do{
@@ -22,9 +24,11 @@ public class Main {
                 case "3": clientController.update(); break;
                 case "4": clientController.delete(); break;
 
-                case "5": projectController.save(); break;
+                case "5": projectController.manageProject(); break;
                 case "6": projectController.getAll(); break;
-                case "7": projectController.calculateCost(); break;
+                case "7": quoteController.addQuoteMenu(); break;
+                case "8": materialController.saveNewMaterial(); break;
+                case "9": laborController.saveNewLabor(); break;
                 case "10": exit = true; break;
                 default:
                     System.out.println("Chois Incorect");

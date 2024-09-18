@@ -52,6 +52,27 @@ public class MaterialController {
     public double totalCostMaterial(List<Material> listMaterial){
         return materialService.totalCostMaterial(listMaterial);
     }
+    public void saveNewMaterial(){
+        Optional<Project> project ;
+        int id=0;
+        do {
+            ProjectController projectController = new ProjectController();
+            projectController.getAll();
+            System.out.println("Select the project for which you want to add a material (Id) : ");
+            id = scanner.nextInt();
+            scanner.nextLine();
+            project = projectController.getById(id);
+            project.ifPresentOrElse(project1 -> {
+                save(project1);
+                double totalCost = projectController.totalCostProject(project1);
+                projectController.updateCost(project1,totalCost);
+            },()->{
+                System.out.println("Project not found");
+                System.out.println("0 -> Cancel");
+            });
+        }while (project.isEmpty() && id != 0);
+
+    }
 
 
 }

@@ -3,18 +3,20 @@ package repository;
 import config.DatabaseConnection;
 import domain.Project;
 import domain.Quote;
+import repository.impl.QuoteRepositoryImpl;
 
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.Optional;
 
-public class QuoteRepository {
-    private Connection connection;
+public class QuoteRepository implements QuoteRepositoryImpl {
+    private final Connection connection;
     public QuoteRepository() {
         this.connection = DatabaseConnection.getInstance().getConnection();
     }
-
+    @Override
     public Optional<Quote> save(Quote quote){
         try {
             this.connection.setAutoCommit(false);
@@ -27,9 +29,12 @@ public class QuoteRepository {
             saveStmt.setInt(5, quote.getProject().getId());
             int results = saveStmt.executeUpdate();
             if(results > 0){
-                int id = saveStmt.getGeneratedKeys().getInt(1);
-                quote.setId(id);
-                return Optional.of(quote);
+                ResultSet generatedKeys = saveStmt.getGeneratedKeys();
+                if(generatedKeys.next()){
+                    int id = generatedKeys.getInt(1);
+                    quote.setId(id);
+                    return Optional.of(quote);
+                }
             }
         }catch (Exception e){
             try {
@@ -46,6 +51,7 @@ public class QuoteRepository {
         }
         return Optional.empty();
     }
+    @Override
     public Optional<Quote> getByIdProject(Project project){
         try {
             String query = "SELECT * FROM quotes WHERE project_id = ?";
