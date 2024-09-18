@@ -55,11 +55,11 @@ public class Material extends Component {
 
     @Override
     public String toString() {
-        return super.toString()+" \nMaterial :" +
+        return super.toString()+" \nMaterial : ------------" +
                 "idMaterial=" + idMaterial +
-                "-- unitCost=" + unitCost +
-                "-- quantity=" + quantity +
-                "-- transportCost=" + transportCost +
-                "-- qualityCoefficient=" + qualityCoefficient ;
+                "\nunitCost=" + unitCost +
+                "\nquantity=" + quantity +
+                "\ntransportCost=" + transportCost +
+                "\nqualityCoefficient=" + qualityCoefficient ;
     }
 }

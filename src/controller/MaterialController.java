@@ -13,9 +13,9 @@ public class MaterialController {
     private final MaterialService materialService = new MaterialService();
     private final Scanner scanner = new Scanner(System.in);
     public Optional<Material> save(Project project){
-        System.out.print("Do you want to add a material? (yes/no)");
+        System.out.print("Do you want to add a material? (y/n)");
         String option = scanner.nextLine();
-        if(option.equals("yes")){
+        if(option.equals("y")){
             System.out.print("Enter the material name : ");
             String name = scanner.nextLine();
             System.out.print("Enter the quantity of this material (in m²): ");
@@ -26,8 +26,10 @@ public class MaterialController {
             double transportCost = scanner.nextDouble();
             System.out.print("Enter the material quality coefficient (1.0 = standard, > 1.0 = high quality):");
             double coefficientQuality = scanner.nextDouble();
+            System.out.println("Enter the material vat rate %: ");
+            double vatRate = scanner.nextDouble();
             String def = scanner.nextLine();
-            Material material = new Material(name,String.valueOf(ComponentType.MATERIAL),0,unitCost,quantity,transportCost,coefficientQuality,project);
+            Material material = new Material(name,String.valueOf(ComponentType.MATERIAL),vatRate,unitCost,quantity,transportCost,coefficientQuality,project);
             materialService.save(material).ifPresentOrElse(material1 -> {
                 System.out.println("Material added successfully");
             },()-> {
@@ -96,37 +98,37 @@ public class MaterialController {
                 scanner.nextLine();
                 Optional<Material> material = materialService.getById(idMaterial);
                 material.ifPresentOrElse(material1 -> {
-                    System.out.println("Do you want to update the name of the material? (yes/no)");
+                    System.out.println("Do you want to update the name of the material? (y/n)");
                     String option = scanner.nextLine();
-                    if(option.equals("yes")){
+                    if(option.equals("y")){
                         System.out.println("Enter the new name of the material : ");
                         String name = scanner.nextLine();
                         material1.setName(name);
                     }
-                    System.out.println("Do you want to update the quantity of the material? (yes/no)");
+                    System.out.println("Do you want to update the quantity of the material? (y/n)");
                     option = scanner.nextLine();
-                    if(option.equals("yes")){
+                    if(option.equals("y")){
                         System.out.println("Enter the new quantity of this material (in m²): ");
                         double quantity = scanner.nextDouble();
                         material1.setQuantity(quantity);
                     }
-                    System.out.println("Do you want to update the unit cost of the material? (yes/no)");
+                    System.out.println("Do you want to update the unit cost of the material? (y/n)");
                     option = scanner.nextLine();
-                    if(option.equals("yes")){
+                    if(option.equals("y")){
                         System.out.println("Enter the new unit cost of this material (€/m²): ");
                         double unitCost = scanner.nextDouble();
                         material1.setUnitCost(unitCost);
                     }
-                    System.out.println("Do you want to update the cost of transporting the material? (yes/no)");
+                    System.out.println("Do you want to update the cost of transporting the material? (y/n)");
                     option = scanner.nextLine();
-                    if(option.equals("yes")){
+                    if(option.equals("y")){
                         System.out.println("Enter the new cost of transporting this material (€): ");
                         double transportCost = scanner.nextDouble();
                         material1.setTransportCost(transportCost);
                     }
-                    System.out.println("Do you want to update the material quality coefficient? (yes/no)");
+                    System.out.println("Do you want to update the material quality coefficient? (y/n)");
                     option = scanner.nextLine();
-                    if(option.equals("yes")){
+                    if(option.equals("y")){
                         System.out.println("Enter the new material quality coefficient (1.0 = standard, > 1.0 = high quality):");
                         double coefficientQuality = scanner.nextDouble();
                         material1.setQualityCoefficient(coefficientQuality);

@@ -29,8 +29,8 @@ public class ClientController {
         address = scanner.nextLine();
         System.out.print("Enter the phone number of the client: ");
         phone = scanner.nextLine();
-        System.out.println("Is the client a professional? (yes/no)");
-        isProfessional = scanner.nextLine().equals("yes");
+        System.out.println("Is the client a professional? (y/no)");
+        isProfessional = scanner.nextLine().equals("y");
         Client client = new Client(name, address, phone, isProfessional);
         optionalClient= clientService.save(client);
         optionalClient.ifPresentOrElse(client1 -> {
@@ -96,8 +96,8 @@ public class ClientController {
         Optional<Client> client= getClient();
         client.ifPresentOrElse(client1 -> {
             System.out.println("Client Info : "+client1.toString());
-            System.out.println("Are you sure you want to delete this client? (yes/no)");
-            if(!scanner.nextLine().equals("yes")){
+            System.out.println("Are you sure you want to delete this client? (y/n)");
+            if(!scanner.nextLine().equals("y")){
                 System.out.println("Client Not Deleted");
             }else {
                 Optional<Client> clientOptional = clientService.delete(client1);

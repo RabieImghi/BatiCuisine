@@ -12,7 +12,6 @@ public class Labor extends Component {
         this.hoursWorked = hoursWorked;
         this.workerProductivity = workerProductivity;
     }
-
     public int getIdLabor() {
         return idLabor;
     }
@@ -43,5 +42,14 @@ public class Labor extends Component {
 
     public void setWorkerProductivity(double workerProductivity) {
         this.workerProductivity = workerProductivity;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString()+"\nLabor :--------------\n " +
+                "idLabor=" + idLabor +
+                "\nhourlyRate=" + hourlyRate +
+                "\nhoursWorked=" + hoursWorked +
+                "\nworkerProductivity=" + workerProductivity;
     }
 }

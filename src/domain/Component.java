@@ -55,10 +55,10 @@ public class Component {
 
     @Override
     public String toString() {
-        return "Component : \n" +
-                "-- name='" + name + '\'' +
-                "-- componentType='" + componentType + '\'' +
-                "-- vatRate=" + vatRate +
-                "-- project=" + project;
+        return "Component : ==============================================\n" +
+                "name='" + name + '\'' +
+                "\ncomponentType='" + componentType + '\'' +
+                "\nvatRate=" + vatRate +
+                "\nproject=" + project;
     }
 }

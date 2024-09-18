@@ -28,7 +28,7 @@ public class Main {
                 case "6": projectController.getAll(); break;
                 case "7": quoteController.addQuoteMenu(); break;
                 case "8": materialController.manageMaterial(); break;
-                case "9": laborController.saveNewLabor(); break;
+                case "9": laborController.manageLabor(); break;
                 case "10": exit = true; break;
                 default:
                     System.out.println("Chois Incorect");

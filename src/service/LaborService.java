@@ -20,4 +20,13 @@ public class LaborService implements LaborServiceImpl {
     public double totalCostLabor(List<Labor> listMaterial){
         return listMaterial.stream().mapToDouble(labor -> labor.getHourlyRate() * labor.getHoursWorked() * labor.getWorkerProductivity() ).sum();
     }
+    public Optional<Labor> getById(int id) {
+        return laborRepository.getById(id);
+    }
+    public void delete(Labor labor) {
+        laborRepository.delete(labor);
+    }
+    public void update(Labor labor) {
+        laborRepository.update(labor);
+    }
 }
