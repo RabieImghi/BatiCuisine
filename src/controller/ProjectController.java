@@ -45,9 +45,9 @@ public class ProjectController {
             System.out.println("Client Phone : " + client.getPhone());
             String isProfessional = client.isProfessional() ? "Professional" : "Not Professional";
             System.out.println("Client is Professional : " + isProfessional);
-            System.out.println("\nDo you want to add a project for this client? (yes/no)");
+            System.out.println("\nDo you want to add a project for this client? (y/n)");
             String option = scanner.nextLine();
-            if(option.equals("yes")){
+            if(option.equals("y")){
                 System.out.println("Project Name");
                 String name = scanner.nextLine();
                 Project project = new Project(name, client);
@@ -57,18 +57,14 @@ public class ProjectController {
                     saveLabor(project1);
                     String def = scanner.nextLine();
                     System.out.println("--- Calculation of total cost ---");
-                    System.out.print("Would you like to apply VAT to the project? (y/n) : ");
-                    String vat = scanner.nextLine();
-                    if(vat.equals("y")){
-                        materialController.updateVAT(project1);
-                    }
+
                     System.out.print("Would you like to apply a profit margin to the project? (y/n) : ");
                     String profit = scanner.nextLine();
                     if(profit.equals("y")){
                         System.out.println("Enter the profit margin percentage (%) : ");
                         double profitMargin = scanner.nextDouble();
-                        projectService.updateProfitMargin(project1, profitMargin);
                         project1.setProfitMargin(profitMargin);
+                        projectService.updateProfitMargin(project1, profitMargin);
                     }
                     System.out.println("Cost calculation in progress...");
                     calculateTotalCost(project1,1);
@@ -205,7 +201,7 @@ public class ProjectController {
                 System.out.printf("%-20d | %-20s | %-20s | %-20s | %-20s | %-20s\n",project.getId(), project.getClient().getName(), project.getProjectName(),status, project.getProfitMargin()+" %", project.getTotalCost()+" €");
                 System.out.println("-------------------------------------------------------------------------------------------------------------------------------");
             });
-            System.out.println("Do you want to see the details of a project? (yes/no) : ");
+            System.out.println("Do you want to see the details of a project? (y/n) : ");
             String option = scanner.nextLine();
             if(option.equals("y")){
                 System.out.print("Enter the project id : ");
@@ -225,9 +221,9 @@ public class ProjectController {
         scanner.nextLine();
         Optional<Project> project = projectService.getById(id);
         project.ifPresentOrElse(project1 -> {
-            System.out.println("Are you sure you want to delete the project? (yes/no) : ");
+            System.out.println("Are you sure you want to delete the project? (y/n) : ");
             String option = scanner.nextLine();
-            if (option.equals("yes")){
+            if (option.equals("y")){
                 projectService.delete(project1);
                 System.out.println("Project deleted with success");
             }
@@ -285,7 +281,10 @@ public class ProjectController {
                     case "3": {
                         System.out.print("Enter the new profit margin : ");
                         double profitMargin = scanner.nextDouble();
-                        projectService.updateProfitMargin(project1,profitMargin);
+                        project1.setProfitMargin(profitMargin);
+                        projectService.update(project1);
+                        double totalCost = totalCostProject(project1);
+                        updateCost(project1,totalCost);
                         break;
                     }
                     case "4": break;

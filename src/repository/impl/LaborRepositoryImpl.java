@@ -7,7 +7,10 @@ import java.util.List;
 import java.util.Optional;
 
 public interface LaborRepositoryImpl {
-    Optional<Labor> save(Labor labor);
+    public Optional<Labor> save(Labor labor);
 
-    List<Labor> getAll(Project project);
+    public List<Labor> getAll(Project project);
+    public Optional<Labor> getById(int id);
+    public void delete(Labor labor);
+    public void update(Labor labor);
 }

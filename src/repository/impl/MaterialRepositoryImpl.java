@@ -7,9 +7,12 @@ import java.util.List;
 import java.util.Optional;
 
 public interface MaterialRepositoryImpl {
-    Optional<Material> save(Material material);
+    public Optional<Material> save(Material material);
 
-    List<Material> getAll(Project project);
+    public List<Material> getAll(Project project);
 
-    void updateVAT(Project project, double vatRate);
+    public void updateVAT(Project project, double vatRate);
+    public Optional<Material> getById(int id);
+    public void update(Material material);
+    public void delete(Material material);
 }
