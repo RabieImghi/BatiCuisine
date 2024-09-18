@@ -14,4 +14,5 @@ public interface MaterialServiceImpl {
     public double totalCostMaterial(List<Material> listMaterial);
     public Optional<Material> getById(int id);
     public void update(Material material);
+    public void delete(Material material);
 }

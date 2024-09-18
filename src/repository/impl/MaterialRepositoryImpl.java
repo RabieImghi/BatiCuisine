@@ -14,4 +14,5 @@ public interface MaterialRepositoryImpl {
     public void updateVAT(Project project, double vatRate);
     public Optional<Material> getById(int id);
     public void update(Material material);
+    public void delete(Material material);
 }

@@ -57,7 +57,8 @@ public class MaterialController {
         do{
             System.out.println("1 -> Add a material");
             System.out.println("2 -> Update a material");
-            System.out.println("3 -> Exit");
+            System.out.println("3 -> Delete a material");
+            System.out.println("4 -> Exit");
             String option = scanner.nextLine();
             switch (option){
                 case "1":
@@ -67,6 +68,9 @@ public class MaterialController {
                     updateMaterial();
                     break;
                 case "3":
+                    deleteMaterial();
+                    break;
+                case "4":
                     exit = true;
                     break;
                 default:
@@ -130,6 +134,39 @@ public class MaterialController {
                     materialService.update(material1);
                     double totalCost = projectController.totalCostProject(project1);
                     projectController.updateCost(project1,totalCost);
+                    System.out.println("Material updated successfully");
+                },()->{
+                    System.out.println("Material not found");
+                    System.out.println("0 -> Cancel");
+                });
+            },()->{
+                System.out.println("Project not found");
+                System.out.println("0 -> Cancel");
+            });
+        }while (project.isEmpty() && id != 0);
+    }
+    public void deleteMaterial(){
+        Optional<Project> project ;
+        int id=0;
+        do {
+            ProjectController projectController = new ProjectController();
+            projectController.getAll();
+            System.out.println("Select the project for which you want to delete a material (Id) : ");
+            id = scanner.nextInt();
+            scanner.nextLine();
+            project = projectController.getById(id);
+            project.ifPresentOrElse(project1 -> {
+                List<Material> listMaterial = getAll(project1);
+                listMaterial.forEach(System.out::println);
+                System.out.println("Select the material to delete (Id) : ");
+                int idMaterial = scanner.nextInt();
+                scanner.nextLine();
+                Optional<Material> material = materialService.getById(idMaterial);
+                material.ifPresentOrElse(material1 -> {
+                    materialService.delete(material1);
+                    double totalCost = projectController.totalCostProject(project1);
+                    projectController.updateCost(project1,totalCost);
+                    System.out.println("Material deleted successfully");
                 },()->{
                     System.out.println("Material not found");
                     System.out.println("0 -> Cancel");

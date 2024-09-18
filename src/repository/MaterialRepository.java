@@ -167,4 +167,27 @@ public class MaterialRepository implements MaterialRepositoryImpl {
             }
         }
     }
+
+    @Override
+    public void delete(Material material){
+        try {
+            this.connection.setAutoCommit(false);
+            String stmDelete = "DELETE FROM materials WHERE id = ?";
+            PreparedStatement save = this.connection.prepareStatement(stmDelete);
+            save.setInt(1,material.getId());
+            save.executeUpdate();
+        }catch (SQLException e){
+            try {
+                this.connection.rollback();
+            }catch (SQLException e2){
+                e2.printStackTrace();
+            }
+        }finally {
+            try {
+                this.connection.setAutoCommit(true);
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+    }
 }

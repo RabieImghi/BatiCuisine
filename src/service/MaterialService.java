@@ -29,4 +29,7 @@ public class MaterialService implements MaterialServiceImpl {
     public void update(Material material) {
         materialRepository.update(material);
     }
+    public void delete(Material material) {
+        materialRepository.delete(material);
+    }
 }
