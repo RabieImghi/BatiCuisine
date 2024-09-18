@@ -25,13 +25,10 @@ public class Main {
                 case "5": projectController.save(); break;
                 case "6": projectController.getAll(); break;
                 case "7": projectController.calculateCost(); break;
-                case "0": exit = true; break;
+                case "10": exit = true; break;
                 default:
-                    System.out.println("inc");
+                    System.out.println("Chois Incorect");
             }
-
-
-
         }while (!exit);
     }
 }

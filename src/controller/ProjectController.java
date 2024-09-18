@@ -82,12 +82,12 @@ public class ProjectController {
                     "Material Name", "Component Type", "VAT Rate", "Unit Cost", "Quantity",
                     "Transport Cost", "Quality Coefficient");
             listMaterial.forEach(material -> {
-                System.out.println("____________________________________________________________________________________________________________________________________________________");
+                System.out.println("____________________________________________________________________________________________________________________________________________________________");
                 System.out.printf("%-15s | %-20s | %-20s | %-20s | %-20s | %-20s | %-20s\n",
                         material.getName(), material.getComponentType(), material.getVatRate(),
                         material.getUnitCost(), material.getQuantity(), material.getTransportCost(),
                         material.getQualityCoefficient());
-                System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------");
+                System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------");
             });
             System.out.println("**Total cost of materials before VAT: " + totalCostMaterial + " €");
             System.out.println("**Total cost of materials with VAT ("+listMaterial.get(0).getVatRate()+"%): " + totalCostMaterial * vat + " €");
@@ -100,12 +100,12 @@ public class ProjectController {
                     "Productivity Worker");
             totalCostLabor = laborController.totalCostLabor(listLabor);
             listLabor.forEach(labor -> {
-                System.out.println("____________________________________________________________________________________________________________________________________________________");
+                System.out.println("____________________________________________________________________________________________________________________________________________________________");
                 System.out.printf("%-15s | %-20s | %-20s | %-20s | %-20s | %-20s\n",
                         labor.getName(), labor.getComponentType(), labor.getVatRate(),
                         labor.getHourlyRate(), labor.getHoursWorked(), labor.getWorkerProductivity()
                        );
-                System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------");
+                System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------");
             });
 
             System.out.println("**Total labor cost before VAT: " + totalCostLabor + " €");
@@ -170,10 +170,10 @@ public class ProjectController {
             System.out.println("No project found");
         }else {
             System.out.printf("\n%-15s |%-15s | %-20s | %-20s | %-20s%n","Project Id", "Client Name", "Project Name", "Profit Margin", "Total Cost");
-            System.out.println("_________________________________________________________________________________");
+            System.out.println("_____________________________________________________________________________________________");
             projectList.forEach(project -> {
-                System.out.printf("%-15d | %-15s | %-20s | %-20s | %-20s\n",project.getId(), project.getClient().getName(), project.getProjectName(), project.getProfitMargin(), project.getTotalCost());
-                System.out.println("-------------------------------------------------------------------------------");
+                System.out.printf("%-15d | %-15s | %-20s | %-20s | %-20s\n",project.getId(), project.getClient().getName(), project.getProjectName(), project.getProfitMargin()+" %", project.getTotalCost()+" €");
+                System.out.println("-------------------------------------------------------------------------------------------");
             });
         }
     }
