@@ -19,6 +19,24 @@ public class ProjectController {
     private final QuoteController quoteController = new QuoteController();
 
     private final Scanner scanner = new Scanner(System.in);
+    public void manageProject(){
+        boolean exit = false;
+        do{
+            System.out.println("1 : Add Project");
+            System.out.println("2 : Delete Project");
+            System.out.println("3 : Update Project");
+            System.out.println("4 : Exit");
+            String option = scanner.nextLine();
+            switch (option){
+                case "1": save(); break;
+                case "2": deleteProject(); break;
+                case "3": updateProject; break;
+                case "4": exit = true; break;
+                default:
+                    System.out.println("Invalid option");
+            }
+        }while (!exit);
+    }
     public void save() {
         Optional<Client> clients = getClient();
         clients.ifPresent(client ->{
@@ -217,6 +235,21 @@ public class ProjectController {
                 },()-> System.out.println("Project not found"));
             }
         }
+    }
+
+    public void deleteProject(){
+        getAll();
+        System.out.print("Enter the project id to delete : ");
+        int id = scanner.nextInt();
+        Optional<Project> project = projectService.getById(id);
+        project.ifPresentOrElse(project1 -> {
+            System.out.println("Are you sure you want to delete the project? (yes/no) : ");
+            String option = scanner.nextLine();
+            if (option.equals("yes")){
+                projectService.delete(project1);
+                System.out.println("Project deleted with success");
+            }
+        },()-> System.out.println("Project not found"));
     }
 
 }

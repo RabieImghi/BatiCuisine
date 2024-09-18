@@ -149,4 +149,25 @@ public class ProjectRepository {
         }
         return Optional.empty();
     }
+    public void delete(Project project){
+        try {
+            this.connection.setAutoCommit(false);
+            String query = "DELETE FROM projects WHERE id = ?";
+            PreparedStatement preparedStatement = this.connection.prepareStatement(query);
+            preparedStatement.setInt(1,project.getId());
+            preparedStatement.executeUpdate();
+        }catch (SQLException e){
+            try {
+                this.connection.rollback();
+            }catch (SQLException e2){
+                e2.printStackTrace();
+            }
+        }finally {
+            try {
+                this.connection.setAutoCommit(true);
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+    }
 }

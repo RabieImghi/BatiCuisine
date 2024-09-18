@@ -10,7 +10,7 @@ public class Menu {
         System.out.println("|=====================================================|");
         System.out.println("|                   Project Management                |");
         System.out.println("|=====================================================|");
-        System.out.println("| [5] Create New Project     [6] Display All Project  |");
+        System.out.println("| [5] Manage Project         [6] Display All Project  |");
         System.out.println("| [7] Calculate The Cost Of A Project                 |");
         System.out.println("|=====================================================|");
         System.out.println("|                     Material / Labor                |");
