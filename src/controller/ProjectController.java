@@ -3,6 +3,7 @@ package controller;
 import domain.*;
 import service.ClientService;
 import service.ProjectService;
+import utils.ProjectStatus;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -115,7 +116,8 @@ public class ProjectController {
             double totalCostTva2 = totalCostTva + totalCost;
 
             if(isRunung == 1) {
-                projectService.updateProfitCost(project,totalCostTva2 );
+                updateCost(project,totalCostTva2);
+
                 System.out.print("Would you like to add Quote ? (y/n) : ");
                 String quote = scanner.nextLine();
                 if(quote.equals("y")){
@@ -133,6 +135,9 @@ public class ProjectController {
             }
         });
     }
+    public void updateCost(Project project,double cost){
+        projectService.updateProfitCost(project,cost);
+    }
     public void calculateCost(){
         getAll();
         System.out.print("Enter the project id : ");
@@ -142,6 +147,17 @@ public class ProjectController {
             System.out.println(project);
             calculateTotalCost(project,0);
         },()-> System.out.println("Project not found"));
+    }
+    public double totalCostProject(Project project){
+        List<Material> listMaterial = materialController.getAll(project);
+        double vat = (listMaterial.get(0).getVatRate()/100)+1;
+        double profitMargin = project.getProfitMargin();
+        double totalCostMaterial= materialController.totalCostMaterial(listMaterial);
+        List<Labor> listLabor = laborController.getAll(project);
+        double totalCostLabor = laborController.totalCostLabor(listLabor);
+        double totalCost = (totalCostLabor * vat) + (totalCostMaterial * vat );
+        double totalCostProfit = totalCost * profitMargin/100;
+        return totalCostProfit+totalCost;
     }
     public void saveMaterial(Project project){
         Optional<Material> optionalMaterial ;
@@ -174,18 +190,32 @@ public class ProjectController {
             }
         } while (!option.equals("1") && !option.equals("2"));
     }
+    public Optional<Project> getById(int id){
+        return projectService.getById(id);
+    }
 
     public void getAll(){
         List<Project> projectList = projectService.getAll();
         if(projectList.isEmpty()){
             System.out.println("No project found");
         }else {
-            System.out.printf("\n%-15s |%-15s | %-20s | %-20s | %-20s%n","Project Id", "Client Name", "Project Name", "Profit Margin", "Total Cost");
-            System.out.println("_____________________________________________________________________________________________");
+            System.out.printf("\n%-20s |%-20s  | %-20s | %-20s | %-20s | %-20s%n","Project Id", "Client Name", "Project Name", "Project Status", "Profit Margin", "Total Cost");
+            System.out.println("_______________________________________________________________________________________________________________________________");
             projectList.forEach(project -> {
-                System.out.printf("%-15d | %-15s | %-20s | %-20s | %-20s\n",project.getId(), project.getClient().getName(), project.getProjectName(), project.getProfitMargin()+" %", project.getTotalCost()+" €");
-                System.out.println("-------------------------------------------------------------------------------------------");
+                String status = project.getProjectStatus() == ProjectStatus.IN_PROGRESS ? "In Progress" : "Completed";
+                System.out.printf("%-20d | %-20s | %-20s | %-20s | %-20s | %-20s\n",project.getId(), project.getClient().getName(), project.getProjectName(),status, project.getProfitMargin()+" %", project.getTotalCost()+" €");
+                System.out.println("-------------------------------------------------------------------------------------------------------------------------------");
             });
+            System.out.println("Do you want to see the details of a project? (yes/no) : ");
+            String option = scanner.nextLine();
+            if(option.equals("y")){
+                System.out.print("Enter the project id : ");
+                int id = scanner.nextInt();
+                Optional<Project> project = projectService.getById(id);
+                project.ifPresentOrElse(project1 -> {
+                    calculateTotalCost(project1,0);
+                },()-> System.out.println("Project not found"));
+            }
         }
     }
 
