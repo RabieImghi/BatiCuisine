@@ -52,6 +52,94 @@ public class MaterialController {
     public double totalCostMaterial(List<Material> listMaterial){
         return materialService.totalCostMaterial(listMaterial);
     }
+    public void manageMaterial(){
+        boolean exit = false;
+        do{
+            System.out.println("1 -> Add a material");
+            System.out.println("2 -> Update a material");
+            System.out.println("3 -> Exit");
+            String option = scanner.nextLine();
+            switch (option){
+                case "1":
+                    saveNewMaterial();
+                    break;
+                case "2":
+                    updateMaterial();
+                    break;
+                case "3":
+                    exit = true;
+                    break;
+                default:
+                    System.out.println("Incorrect choice");
+            }
+        }while (!exit);
+    }
+    public void updateMaterial(){
+        Optional<Project> project ;
+        int id=0;
+        do {
+            ProjectController projectController = new ProjectController();
+            projectController.getAll();
+            System.out.println("Select the project for which you want to update a material (Id) : ");
+            id = scanner.nextInt();
+            scanner.nextLine();
+            project = projectController.getById(id);
+            project.ifPresentOrElse(project1 -> {
+                List<Material> listMaterial = getAll(project1);
+                listMaterial.forEach(System.out::println);
+                System.out.println("Select the material to update (Id) : ");
+                int idMaterial = scanner.nextInt();
+                scanner.nextLine();
+                Optional<Material> material = materialService.getById(idMaterial);
+                material.ifPresentOrElse(material1 -> {
+                    System.out.println("Do you want to update the name of the material? (yes/no)");
+                    String option = scanner.nextLine();
+                    if(option.equals("yes")){
+                        System.out.println("Enter the new name of the material : ");
+                        String name = scanner.nextLine();
+                        material1.setName(name);
+                    }
+                    System.out.println("Do you want to update the quantity of the material? (yes/no)");
+                    option = scanner.nextLine();
+                    if(option.equals("yes")){
+                        System.out.println("Enter the new quantity of this material (in m²): ");
+                        double quantity = scanner.nextDouble();
+                        material1.setQuantity(quantity);
+                    }
+                    System.out.println("Do you want to update the unit cost of the material? (yes/no)");
+                    option = scanner.nextLine();
+                    if(option.equals("yes")){
+                        System.out.println("Enter the new unit cost of this material (€/m²): ");
+                        double unitCost = scanner.nextDouble();
+                        material1.setUnitCost(unitCost);
+                    }
+                    System.out.println("Do you want to update the cost of transporting the material? (yes/no)");
+                    option = scanner.nextLine();
+                    if(option.equals("yes")){
+                        System.out.println("Enter the new cost of transporting this material (€): ");
+                        double transportCost = scanner.nextDouble();
+                        material1.setTransportCost(transportCost);
+                    }
+                    System.out.println("Do you want to update the material quality coefficient? (yes/no)");
+                    option = scanner.nextLine();
+                    if(option.equals("yes")){
+                        System.out.println("Enter the new material quality coefficient (1.0 = standard, > 1.0 = high quality):");
+                        double coefficientQuality = scanner.nextDouble();
+                        material1.setQualityCoefficient(coefficientQuality);
+                    }
+                    materialService.update(material1);
+                    double totalCost = projectController.totalCostProject(project1);
+                    projectController.updateCost(project1,totalCost);
+                },()->{
+                    System.out.println("Material not found");
+                    System.out.println("0 -> Cancel");
+                });
+            },()->{
+                System.out.println("Project not found");
+                System.out.println("0 -> Cancel");
+            });
+        }while (project.isEmpty() && id != 0);
+    }
     public void saveNewMaterial(){
         Optional<Project> project ;
         int id=0;

@@ -18,6 +18,9 @@ public class Project {
         this.client = client;
     }
 
+    public Project() {
+    }
+
     public int getId() {
         return id;
     }

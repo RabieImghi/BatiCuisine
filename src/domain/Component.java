@@ -52,4 +52,13 @@ public class Component {
     public void setProject(Project project) {
       this.project = project;
     }
+
+    @Override
+    public String toString() {
+        return "Component : \n" +
+                "-- name='" + name + '\'' +
+                "-- componentType='" + componentType + '\'' +
+                "-- vatRate=" + vatRate +
+                "-- project=" + project;
+    }
 }

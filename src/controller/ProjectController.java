@@ -67,8 +67,8 @@ public class ProjectController {
                     if(profit.equals("y")){
                         System.out.println("Enter the profit margin percentage (%) : ");
                         double profitMargin = scanner.nextDouble();
-                        projectService.updateProfitMargin(project1, profitMargin);
                         project1.setProfitMargin(profitMargin);
+                        projectService.updateProfitMargin(project1, profitMargin);
                     }
                     System.out.println("Cost calculation in progress...");
                     calculateTotalCost(project1,1);
@@ -285,7 +285,10 @@ public class ProjectController {
                     case "3": {
                         System.out.print("Enter the new profit margin : ");
                         double profitMargin = scanner.nextDouble();
-                        projectService.updateProfitMargin(project1,profitMargin);
+                        project1.setProfitMargin(profitMargin);
+                        projectService.update(project1);
+                        double totalCost = totalCostProject(project1);
+                        updateCost(project1,totalCost);
                         break;
                     }
                     case "4": break;

@@ -22,5 +22,11 @@ public class MaterialService implements MaterialServiceImpl {
     public double totalCostMaterial(List<Material> listMaterial){
         return  listMaterial.stream().mapToDouble(material -> ((material.getUnitCost() * material.getQuantity()) * material.getQualityCoefficient() + material.getTransportCost())).sum();
     }
+    public Optional<Material> getById(int id) {
+        return materialRepository.getById(id);
+    }
 
+    public void update(Material material) {
+        materialRepository.update(material);
+    }
 }
