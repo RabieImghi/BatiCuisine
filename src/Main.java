@@ -12,6 +12,8 @@ public class Main {
     static MaterialController materialController = new MaterialController();
     static ProjectController projectController = new ProjectController();
     static QuoteController quoteController = new QuoteController();
+    static String RED = "\u001B[31m";
+    static String RESET = "\u001B[0m";
     public static void main(String[] args) {
         boolean exit = false;
         do{
@@ -25,13 +27,13 @@ public class Main {
                 case "4": clientController.delete(); break;
 
                 case "5": projectController.manageProject(); break;
-                case "6": projectController.getAll(); break;
-                case "7": quoteController.addQuoteMenu(); break;
+                case "6": projectController.getProjectDetail(); break;
+                case "7": quoteController.manageQuote(); break;
                 case "8": materialController.manageMaterial(); break;
                 case "9": laborController.manageLabor(); break;
                 case "10": exit = true; break;
                 default:
-                    System.out.println("Chois Incorect");
+                    System.out.println(RED+"Invalid choice !"+RESET);
             }
         }while (!exit);
     }

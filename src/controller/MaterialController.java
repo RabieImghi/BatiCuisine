@@ -10,37 +10,52 @@ import java.util.Optional;
 import java.util.Scanner;
 
 public class MaterialController {
+    public static final String RESET = "\u001B[0m";
+    public static final String RED = "\u001B[31m";
+    public static final String GREEN = "\u001B[32m";
+    public static final String YELLOW = "\u001B[33m";
+    public static final String CYAN = "\u001B[36m";
+
     private final MaterialService materialService = new MaterialService();
     private final Scanner scanner = new Scanner(System.in);
-    public Optional<Material> save(Project project){
-        System.out.print("Do you want to add a material? (y/n)");
+    public Optional<Material> save(Project project) {
+        System.out.print(YELLOW + "Do you want to add a material? (y/n): " + RESET);
         String option = scanner.nextLine();
-        if(option.equals("y")){
-            System.out.print("Enter the material name : ");
+
+        if (option.equalsIgnoreCase("y")) {
+            System.out.print(YELLOW + "Enter the material name: " + RESET);
             String name = scanner.nextLine();
-            System.out.print("Enter the quantity of this material (in m²): ");
+
+            System.out.print(YELLOW + "Enter the quantity of this material (in m²): " + RESET);
             double quantity = scanner.nextDouble();
-            System.out.print("Enter the unit cost of this material (€/m²): ");
+
+            System.out.print(YELLOW + "Enter the unit cost of this material (€/m²): " + RESET);
             double unitCost = scanner.nextDouble();
-            System.out.print("Enter the cost of transporting this material (€): ");
+
+            System.out.print(YELLOW + "Enter the cost of transporting this material (€): " + RESET);
             double transportCost = scanner.nextDouble();
-            System.out.print("Enter the material quality coefficient (1.0 = standard, > 1.0 = high quality):");
+
+            System.out.print(YELLOW + "Enter the material quality coefficient (1.0 = standard, > 1.0 = high quality): " + RESET);
             double coefficientQuality = scanner.nextDouble();
-            System.out.println("Enter the material vat rate %: ");
+
+            System.out.print(YELLOW + "Enter the material VAT rate (%): " + RESET);
             double vatRate = scanner.nextDouble();
-            String def = scanner.nextLine();
-            Material material = new Material(name,String.valueOf(ComponentType.MATERIAL),vatRate,unitCost,quantity,transportCost,coefficientQuality,project);
-            materialService.save(material).ifPresentOrElse(material1 -> {
-                System.out.println("Material added successfully");
-            },()-> {
-                System.out.println("Material not added");
+
+            scanner.nextLine();
+
+            Material material = new Material(name, String.valueOf(ComponentType.MATERIAL), vatRate, unitCost, quantity, transportCost, coefficientQuality, project);
+            return materialService.save(material).map(material1 -> {
+                System.out.println(GREEN + "Material added successfully!" + RESET);
+                return material1;
+            }).or(() -> {
+                System.out.println(RED + "Material not added" + RESET);
+                return Optional.empty();
             });
-            return Optional.of(material);
-        }else {
-            System.out.println("Material Add Cancelled");
+
+        } else {
+            System.out.println(RED + "Material Add Cancelled" + RESET);
             return Optional.empty();
         }
-
     }
     public void updateVAT(Project project){
         System.out.print("Enter the VAT rate : ");
@@ -136,6 +151,9 @@ public class MaterialController {
                     materialService.update(material1);
                     double totalCost = projectController.totalCostProject(project1);
                     projectController.updateCost(project1,totalCost);
+                    project1.setTotalCost(totalCost);
+                    QuoteController quoteController = new QuoteController();
+                    quoteController.amountEstimateUpdate(project1);
                     System.out.println("Material updated successfully");
                 },()->{
                     System.out.println("Material not found");
@@ -168,6 +186,9 @@ public class MaterialController {
                     materialService.delete(material1);
                     double totalCost = projectController.totalCostProject(project1);
                     projectController.updateCost(project1,totalCost);
+                    project1.setTotalCost(totalCost);
+                    QuoteController quoteController = new QuoteController();
+                    quoteController.amountEstimateUpdate(project1);
                     System.out.println("Material deleted successfully");
                 },()->{
                     System.out.println("Material not found");
@@ -193,6 +214,9 @@ public class MaterialController {
                 save(project1);
                 double totalCost = projectController.totalCostProject(project1);
                 projectController.updateCost(project1,totalCost);
+                project1.setTotalCost(totalCost);
+                QuoteController quoteController = new QuoteController();
+                quoteController.amountEstimateUpdate(project1);
             },()->{
                 System.out.println("Project not found");
                 System.out.println("0 -> Cancel");

@@ -11,33 +11,50 @@ import java.util.Optional;
 import java.util.Scanner;
 
 public class LaborController {
+    public static final String RESET = "\u001B[0m";
+    public static final String RED = "\u001B[31m";
+    public static final String GREEN = "\u001B[32m";
+    public static final String YELLOW = "\u001B[33m";
+    public static final String CYAN = "\u001B[36m";
     private final LaborService laborService = new LaborService();
     private final Scanner scanner = new Scanner(System.in);
 
-    public Optional<Labor> save(Project project){
-        System.out.print("Do you want to add a Labor? (y/n) : ");
-        if(scanner.nextLine().equals("y")){
-            System.out.print("Enter the labor type (e.g., Basic Worker, Specialist): ");
+    public Optional<Labor> save(Project project) {
+        System.out.print(YELLOW + "Do you want to add a labor? (y/n): " + RESET);
+
+        if (scanner.nextLine().equalsIgnoreCase("y")) {
+            System.out.print(YELLOW + "Enter the labor type (e.g., Basic Worker, Specialist): " + RESET);
             String name = scanner.nextLine();
-            System.out.print("Enter the hourly rate for this labor (€/h): ");
+
+            System.out.print(YELLOW + "Enter the hourly rate for this labor (€/h): " + RESET);
             double hourlyRate = scanner.nextDouble();
-            System.out.print("Enter the number of hours worked: ");
+
+            System.out.print(YELLOW + "Enter the number of hours worked: " + RESET);
             double hoursWorked = scanner.nextDouble();
-            System.out.print("Enter the productivity factor (1.0 = standard, > 1.0 = high productivity): ");
+
+            System.out.print(YELLOW + "Enter the productivity factor (1.0 = standard, > 1.0 = high productivity): " + RESET);
             double workerProductivity = scanner.nextDouble();
-            String def = scanner.nextLine();
-            System.out.println("Enter the labor vat rate %: ");
+
+            scanner.nextLine();
+
+            System.out.print(YELLOW + "Enter the labor VAT rate (%): " + RESET);
             double vatRate = scanner.nextDouble();
-            Labor labor = new Labor(name,String.valueOf(ComponentType.LABOR),vatRate,hourlyRate,hoursWorked,workerProductivity,project);
-            laborService.save(labor).ifPresentOrElse(labor1 -> {
-                System.out.println("Labor added successfully");
-            },()-> System.out.println("Labor not added"));
-            return Optional.of(labor);
-        }else {
-            System.out.println("Labor Add Cancelled");
+
+            scanner.nextLine();
+            Labor labor = new Labor(name, String.valueOf(ComponentType.LABOR), vatRate, hourlyRate, hoursWorked, workerProductivity, project);
+
+            return laborService.save(labor).map(labor1 -> {
+                System.out.println(GREEN + "Labor added successfully!" + RESET);
+                return labor1;
+            }).or(() -> {
+                System.out.println(RED + "Labor not added." + RESET);
+                return Optional.empty();
+            });
+
+        } else {
+            System.out.println(RED + "Labor Add Cancelled." + RESET);
             return Optional.empty();
         }
-
     }
     public List<Labor> getAll(Project project){
         return laborService.getAll(project);
@@ -59,6 +76,9 @@ public class LaborController {
                 save(project1);
                 double totalCost = projectController.totalCostProject(project1);
                 projectController.updateCost(project1,totalCost);
+                project1.setTotalCost(totalCost);
+                QuoteController quoteController = new QuoteController();
+                quoteController.amountEstimateUpdate(project1);
             },()-> System.out.println("Project not found"));
         }while (project.isEmpty());
         save(project.get());
@@ -142,6 +162,9 @@ public class LaborController {
                         laborService.update(labor1);
                         double totalCost = projectController.totalCostProject(project1);
                         projectController.updateCost(project1,totalCost);
+                        project1.setTotalCost(totalCost);
+                        QuoteController quoteController = new QuoteController();
+                        quoteController.amountEstimateUpdate(project1);
                     },()-> System.out.println("Labor not found"));
                 }
             },()-> System.out.println("Project not found"));
@@ -172,6 +195,9 @@ public class LaborController {
                         laborService.delete(labor1);
                         double totalCost = projectController.totalCostProject(project1);
                         projectController.updateCost(project1,totalCost);
+                        project1.setTotalCost(totalCost);
+                        QuoteController quoteController = new QuoteController();
+                        quoteController.amountEstimateUpdate(project1);
                     },()-> System.out.println("Labor not found"));
                 }
             },()-> System.out.println("Project not found"));
