@@ -3,6 +3,7 @@ package controller;
 import domain.*;
 import service.ClientService;
 import service.ProjectService;
+import utils.Menu;
 import utils.ProjectStatus;
 
 import java.time.LocalDate;
@@ -28,11 +29,7 @@ public class ProjectController {
     public void manageProject(){
         boolean exit = false;
         do{
-            System.out.println(BLUE + "\n1 : Add Project" + RESET);
-            System.out.println(BLUE + "2 : Delete Project" + RESET);
-            System.out.println(BLUE + "3 : Update Project" + RESET);
-            System.out.println(BLUE + "4 : Exit" + RESET);
-            System.out.print(YELLOW + "Choose an option: " + RESET);
+            Menu.showProjectManageMenu();
             String option = scanner.nextLine();
             switch (option) {
                 case "1":
@@ -106,6 +103,13 @@ public class ProjectController {
             System.out.printf("%-20s | %-20s", CYAN + "Name" + RESET, client.getName());
             System.out.printf("\n%-20s | %-20s",CYAN + "Address: " + RESET, client.getAddress());
             System.out.printf("\n%-20s | %-20s",CYAN + "Phone: " + RESET, client.getPhone());
+            System.out.printf("\n%-20s | %-20s",CYAN + "Status: " + RESET, client.isProfessional() ? GREEN + "Professional" + RESET : RED + "Not Professional" + RESET);
+            System.out.println(YELLOW + "\n\n================================================" + RESET);
+            System.out.println(CYAN + "Project Information:" + RESET);
+            System.out.println(YELLOW + "================================================" + RESET);
+            System.out.printf("%-20s | %-20s", CYAN + "Project Name" + RESET, project.getProjectName());
+            System.out.printf("\n%-20s | %-20s", CYAN + "Project Status" + RESET, project.getProjectStatus());
+            System.out.printf("\n%-20s | %-20s", CYAN + "Profit Margin" + RESET, project.getProfitMargin() + " %");
 
 
             System.out.println(CYAN + "\n\n================================================" + RESET);
@@ -237,42 +241,56 @@ public class ProjectController {
                     "Project Id", "Client Name", "Project Name", "Project Status", "Profit Margin", "Total Cost");
             System.out.println(CYAN + "_______________________________________________________________________________________________________________________________" + RESET);
             projectList.forEach(project -> {
-                String status = project.getProjectStatus() == ProjectStatus.IN_PROGRESS ? GREEN + "In Progress" + RESET : PURPLE + "Completed" + RESET;
+                String status="";
+                switch (project.getProjectStatus()) {
+                    case IN_PROGRESS:
+                        status = GREEN + "In Progress" + RESET;
+                        break;
+                    case COMPLETED:
+                        status = PURPLE + "Completed" + RESET;
+                        break;
+                    case CANCELED:
+                        status = RED + "Canceled" + RESET;
+                        break;
+                }
                 System.out.printf("%-20d | %-20s | %-20s | %-20s | %-20s | %-20s\n",
                         project.getId(), project.getClient().getName(), project.getProjectName(), status,
                         project.getProfitMargin() + " %", project.getTotalCost() + " €");
                 System.out.println(YELLOW + "-------------------------------------------------------------------------------------------------------------------------------" + RESET);
             });
-            System.out.print(CYAN + "Do you want to see the details of a project? (y/n): " + RESET);
-            String option = scanner.nextLine();
+        }
+    }
+    public void getProjectDetail(){
+        getAll();
+        System.out.print(CYAN + "Do you want to see the details of a project? (y/n): " + RESET);
+        String option = scanner.nextLine();
 
-            if (option.equalsIgnoreCase("y")) {
-                System.out.print(CYAN + "Enter the project id: " + RESET);
-                int id = scanner.nextInt();
-                scanner.nextLine();
-                Optional<Project> project = projectService.getById(id);
-                project.ifPresentOrElse(
-                        project1 -> calculateTotalCost(project1, 0),
-                        () -> System.out.println(RED + "Project not found" + RESET)
-                );
-            }
+        if (option.equalsIgnoreCase("y")) {
+            System.out.print(CYAN + "Enter the project id: " + RESET);
+            int id = scanner.nextInt();
+            scanner.nextLine();
+            Optional<Project> project = projectService.getById(id);
+            project.ifPresentOrElse(
+                    project1 -> calculateTotalCost(project1, 0),
+                    () -> System.out.println(RED + "Project not found" + RESET)
+            );
         }
     }
 
     public void deleteProject(){
         getAll();
-        System.out.print("Enter the project id to delete : ");
+        System.out.print(CYAN+"Enter the project id to delete : "+RESET);
         int id = scanner.nextInt();
         scanner.nextLine();
         Optional<Project> project = projectService.getById(id);
         project.ifPresentOrElse(project1 -> {
-            System.out.println("Are you sure you want to delete the project? (y/n) : ");
+            System.out.print(RED+"Are you sure you want to delete the project? (y/n) : "+RESET);
             String option = scanner.nextLine();
             if (option.equals("y")){
                 projectService.delete(project1);
-                System.out.println("Project deleted with success");
+                System.out.println(GREEN+"Project deleted with success"+RESET);
             }
-        },()-> System.out.println("Project not found"));
+        },()-> System.out.println(RED+"Project not found"+RESET));
     }
     public void updateProject(){
         getAll();
@@ -284,10 +302,7 @@ public class ProjectController {
         project.ifPresentOrElse(project1 -> {
             String option;
             do {
-                System.out.println("1 : Update Project Name");
-                System.out.println("2 : Update Project Status");
-                System.out.println("3 : Update Profit Margin");
-                System.out.println("4 : Exit");
+                Menu.showUpdateProjectMenu();
                 option = scanner.nextLine();
                 switch (option){
                     case "1": {
@@ -326,6 +341,7 @@ public class ProjectController {
                     case "3": {
                         System.out.print("Enter the new profit margin : ");
                         double profitMargin = scanner.nextDouble();
+                        scanner.nextLine();
                         project1.setProfitMargin(profitMargin);
                         projectService.update(project1);
                         double totalCost = totalCostProject(project1);
@@ -339,6 +355,9 @@ public class ProjectController {
             }while (!option.equals("4"));
 
         },()-> System.out.println("Project not found"));
+    }
+    public void update(Project project){
+        projectService.update(project);
     }
 
 }

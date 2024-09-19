@@ -151,6 +151,9 @@ public class MaterialController {
                     materialService.update(material1);
                     double totalCost = projectController.totalCostProject(project1);
                     projectController.updateCost(project1,totalCost);
+                    project1.setTotalCost(totalCost);
+                    QuoteController quoteController = new QuoteController();
+                    quoteController.amountEstimateUpdate(project1);
                     System.out.println("Material updated successfully");
                 },()->{
                     System.out.println("Material not found");
@@ -183,6 +186,9 @@ public class MaterialController {
                     materialService.delete(material1);
                     double totalCost = projectController.totalCostProject(project1);
                     projectController.updateCost(project1,totalCost);
+                    project1.setTotalCost(totalCost);
+                    QuoteController quoteController = new QuoteController();
+                    quoteController.amountEstimateUpdate(project1);
                     System.out.println("Material deleted successfully");
                 },()->{
                     System.out.println("Material not found");
@@ -208,6 +214,9 @@ public class MaterialController {
                 save(project1);
                 double totalCost = projectController.totalCostProject(project1);
                 projectController.updateCost(project1,totalCost);
+                project1.setTotalCost(totalCost);
+                QuoteController quoteController = new QuoteController();
+                quoteController.amountEstimateUpdate(project1);
             },()->{
                 System.out.println("Project not found");
                 System.out.println("0 -> Cancel");

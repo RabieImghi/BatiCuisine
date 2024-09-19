@@ -22,7 +22,7 @@ public class Menu {
         System.out.println(PURPLE + "|                   Project Management                |" + RESET);
         System.out.println(BLUE + "|=====================================================|" + RESET);
         System.out.println(YELLOW + "| [5] Manage Project         [6] Display All Projects |" + RESET);
-        System.out.println(YELLOW + "| [7] Add New Quote                                   |" + RESET);
+        System.out.println(YELLOW + "| [7] Manage Quote                                    |" + RESET);
         System.out.println(BLUE + "|=====================================================|" + RESET);
         System.out.println(PURPLE + "|                     Material / Labor                |" + RESET);
         System.out.println(BLUE + "|=====================================================|" + RESET);
@@ -30,5 +30,35 @@ public class Menu {
         System.out.println(YELLOW + "| [10] Close                                          |" + RESET);
         System.out.println(BLUE + "|=====================================================|" + RESET);
         System.out.print(GREEN + "Enter your option: " + RESET);
+    }
+    public static void showQuoteMenu() {
+        System.out.println(BLUE + "\n|=====================================================|" + RESET);
+        System.out.println(PURPLE + "|                   Quote Management                  |" + RESET);
+        System.out.println(BLUE + "|====================================================+|" + RESET);
+        System.out.println(YELLOW + "| [1] Display All Quotes      [2] Add a Quote         |" + RESET);
+        System.out.println(YELLOW + "| [3] Update a Quote          [4] Delete a Quote      |" + RESET);
+        System.out.println(BLUE + "|=====================================================|" + RESET);
+        System.out.println(YELLOW + "| [5] Exit                                            |" + RESET);
+        System.out.println(BLUE + "|=====================================================|" + RESET);
+        System.out.print(GREEN + "Enter your choice: " + RESET);
+    }
+
+    public static void showUpdateProjectMenu() {
+        System.out.println(BLUE + "\n|=======================================================|" + RESET);
+        System.out.println(PURPLE + "|                Update Project Options                 |" + RESET);
+        System.out.println(BLUE + "|=======================================================|" + RESET);
+        System.out.println(YELLOW + "| [1] Update Project Name     [2] Update Project Status |" + RESET);
+        System.out.println(YELLOW + "| [3] Update Profit Margin    [4] Exit                  |" + RESET);
+        System.out.println(BLUE + "|=======================================================|" + RESET);
+        System.out.print(GREEN + "Enter your choice: " + RESET);
+    }
+    public static void showProjectManageMenu() {
+        System.out.println(BLUE + "\n|=====================================================|" + RESET);
+        System.out.println(PURPLE + "|                Project Management Options           |" + RESET);
+        System.out.println(BLUE + "|=====================================================|" + RESET);
+        System.out.println(YELLOW + "| [1] Add Project             [2] Delete Project      |" + RESET);
+        System.out.println(YELLOW + "| [3] Update Project          [4] Exit                |" + RESET);
+        System.out.println(BLUE + "|=====================================================|" + RESET);
+        System.out.print(GREEN + "Choose an option: " + RESET);
     }
 }

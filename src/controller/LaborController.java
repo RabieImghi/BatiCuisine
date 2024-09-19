@@ -76,6 +76,9 @@ public class LaborController {
                 save(project1);
                 double totalCost = projectController.totalCostProject(project1);
                 projectController.updateCost(project1,totalCost);
+                project1.setTotalCost(totalCost);
+                QuoteController quoteController = new QuoteController();
+                quoteController.amountEstimateUpdate(project1);
             },()-> System.out.println("Project not found"));
         }while (project.isEmpty());
         save(project.get());
@@ -159,6 +162,9 @@ public class LaborController {
                         laborService.update(labor1);
                         double totalCost = projectController.totalCostProject(project1);
                         projectController.updateCost(project1,totalCost);
+                        project1.setTotalCost(totalCost);
+                        QuoteController quoteController = new QuoteController();
+                        quoteController.amountEstimateUpdate(project1);
                     },()-> System.out.println("Labor not found"));
                 }
             },()-> System.out.println("Project not found"));
@@ -189,6 +195,9 @@ public class LaborController {
                         laborService.delete(labor1);
                         double totalCost = projectController.totalCostProject(project1);
                         projectController.updateCost(project1,totalCost);
+                        project1.setTotalCost(totalCost);
+                        QuoteController quoteController = new QuoteController();
+                        quoteController.amountEstimateUpdate(project1);
                     },()-> System.out.println("Labor not found"));
                 }
             },()-> System.out.println("Project not found"));

@@ -27,8 +27,8 @@ public class Main {
                 case "4": clientController.delete(); break;
 
                 case "5": projectController.manageProject(); break;
-                case "6": projectController.getAll(); break;
-                case "7": quoteController.addQuoteMenu(); break;
+                case "6": projectController.getProjectDetail(); break;
+                case "7": quoteController.manageQuote(); break;
                 case "8": materialController.manageMaterial(); break;
                 case "9": laborController.manageLabor(); break;
                 case "10": exit = true; break;
