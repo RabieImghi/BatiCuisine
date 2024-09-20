@@ -167,6 +167,14 @@ public class QuoteController {
                     if(scanner.nextLine().equals("y")){
                         System.out.print(CYAN+"Enter the new acceptance status (true/false) : "+RESET);
                         boolean accepted = Boolean.parseBoolean(scanner.nextLine());
+                        if(accepted){
+                            if(!quote.get().getValidityDate().isAfter(LocalDate.now())){
+                                System.out.println(RED+"The validity date is expired"+RESET);
+                                accepted = false;
+                            }else {
+                                System.out.println(GREEN+"The validity date is not expired"+RESET);
+                            }
+                        }
                         quote.get().setAccepted(accepted);
                     }
                     System.out.print(CYAN+"Would you like to update the quote? (y/n) : "+RESET);
@@ -175,7 +183,7 @@ public class QuoteController {
                         optionalQuote.ifPresent(quote1 ->
                                 System.out.println(GREEN+"Quote updated with success"+RESET));
                                 if (quote.get().isAccepted()) {
-                                    project1.setProjectStatus(ProjectStatus.COMPLETED);
+                                    project1.setProjectStatus(ProjectStatus.IN_PROGRESS);
                                     projectController.update(project1);
                                 }else {
                                     project1.setProjectStatus(ProjectStatus.CANCELED);
