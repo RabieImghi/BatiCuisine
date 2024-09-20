@@ -27,4 +27,11 @@ public class ProjectService  implements ProjectServiceImpl {
     public Optional<Project> getById(int id){
         return projectRepository.getById(id);
     }
+    public void delete(Project project){
+        projectRepository.delete(project);
+    }
+    public void update(Project project){
+        projectRepository.update(project);
+    }
+
 }
