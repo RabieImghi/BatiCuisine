@@ -25,7 +25,6 @@ public class Main {
                 case "2": clientController.getAll(); break;
                 case "3": clientController.update(); break;
                 case "4": clientController.delete(); break;
-
                 case "5": projectController.manageProject(); break;
                 case "6": projectController.getProjectDetail(); break;
                 case "7": quoteController.manageQuote(); break;
