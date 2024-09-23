@@ -4,56 +4,91 @@ import domain.Material;
 import domain.Project;
 import service.MaterialService;
 import utils.ComponentType;
+import utils.Cl;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
 public class MaterialController {
-    public static final String RESET = "\u001B[0m";
-    public static final String RED = "\u001B[31m";
-    public static final String GREEN = "\u001B[32m";
-    public static final String YELLOW = "\u001B[33m";
-    public static final String CYAN = "\u001B[36m";
 
     private final MaterialService materialService = new MaterialService();
     private final Scanner scanner = new Scanner(System.in);
     public Optional<Material> save(Project project) {
-        System.out.print(YELLOW + "Do you want to add a material? (y/n): " + RESET);
+        System.out.print(Cl.YELLOW + "Do you want to add a material? (y/n): " + Cl.RESET);
         String option = scanner.nextLine();
 
         if (option.equalsIgnoreCase("y")) {
-            System.out.print(YELLOW + "Enter the material name: " + RESET);
+            System.out.print(Cl.YELLOW + "Enter the material name: " + Cl.RESET);
             String name = scanner.nextLine();
 
-            System.out.print(YELLOW + "Enter the quantity of this material (in m²): " + RESET);
-            double quantity = scanner.nextDouble();
+            System.out.print(Cl.YELLOW + "Enter the quantity of this material (in m²): " + Cl.RESET);
+            double quantity;
+            do {
+                System.out.print(Cl.YELLOW + "Enter the quantity of this material (in m²): " + Cl.RESET);
+                while (!scanner.hasNextDouble()) {
+                    System.out.println(Cl.RED + "Invalid quantity" + Cl.RESET);
+                    scanner.next();
+                }
+                quantity = scanner.nextDouble();
+            } while (quantity <= 0);
+            System.out.print(Cl.YELLOW + "Enter the unit cost of this material (€/m²): " + Cl.RESET);
+            double unitCost;
+            do {
+                System.out.print(Cl.YELLOW + "Enter the unit cost of this material (€/m²): " + Cl.RESET);
+                while (!scanner.hasNextDouble()) {
+                    System.out.println(Cl.RED + "Invalid unit cost" + Cl.RESET);
+                    scanner.next();
+                }
+                unitCost = scanner.nextDouble();
+            } while (unitCost <= 0);
 
-            System.out.print(YELLOW + "Enter the unit cost of this material (€/m²): " + RESET);
-            double unitCost = scanner.nextDouble();
+            System.out.print(Cl.YELLOW + "Enter the cost of transporting this material (€): " + Cl.RESET);
+            double transportCost;
+            do {
+                System.out.print(Cl.YELLOW + "Enter the cost of transporting this material (€): " + Cl.RESET);
+                while (!scanner.hasNextDouble()) {
+                    System.out.println(Cl.RED + "Invalid transport cost" + Cl.RESET);
+                    scanner.next();
+                }
+                transportCost = scanner.nextDouble();
+            } while (transportCost <= 0);
 
-            System.out.print(YELLOW + "Enter the cost of transporting this material (€): " + RESET);
-            double transportCost = scanner.nextDouble();
+            System.out.print(Cl.YELLOW + "Enter the material quality coefficient (1.0 = standard, > 1.0 = high quality): " + Cl.RESET);
+            double coefficientQuality;
+            do {
+                System.out.print(Cl.YELLOW + "Enter the material quality coefficient (1.0 = standard, > 1.0 = high quality): " + Cl.RESET);
+                while (!scanner.hasNextDouble()) {
+                    System.out.println(Cl.RED + "Invalid coefficient quality" + Cl.RESET);
+                    scanner.next();
+                }
+                coefficientQuality = scanner.nextDouble();
+            } while (coefficientQuality < 1 || coefficientQuality > 2);
 
-            System.out.print(YELLOW + "Enter the material quality coefficient (1.0 = standard, > 1.0 = high quality): " + RESET);
-            double coefficientQuality = scanner.nextDouble();
-
-            System.out.print(YELLOW + "Enter the material VAT rate (%): " + RESET);
-            double vatRate = scanner.nextDouble();
+            System.out.print(Cl.YELLOW + "Enter the material VAT rate (%): " + Cl.RESET);
+            double vatRate;
+            do {
+                System.out.print(Cl.YELLOW + "Enter the material VAT rate (%): " + Cl.RESET);
+                while (!scanner.hasNextDouble()) {
+                    System.out.println(Cl.RED + "Invalid VAT rate" + Cl.RESET);
+                    scanner.next();
+                }
+                vatRate = scanner.nextDouble();
+            } while (vatRate < 0 || vatRate > 100);
 
             scanner.nextLine();
 
             Material material = new Material(name, String.valueOf(ComponentType.MATERIAL), vatRate, unitCost, quantity, transportCost, coefficientQuality, project);
             return materialService.save(material).map(material1 -> {
-                System.out.println(GREEN + "Material added successfully!" + RESET);
+                System.out.println(Cl.GREEN + "Material added successfully!" + Cl.RESET);
                 return material1;
             }).or(() -> {
-                System.out.println(RED + "Material not added" + RESET);
+                System.out.println(Cl.RED + "Material not added" + Cl.RESET);
                 return Optional.empty();
             });
 
         } else {
-            System.out.println(RED + "Material Add Cancelled" + RESET);
+            System.out.println(Cl.RED + "Material Add Cancelled" + Cl.RESET);
             return Optional.empty();
         }
     }
@@ -124,28 +159,60 @@ public class MaterialController {
                     option = scanner.nextLine();
                     if(option.equals("y")){
                         System.out.println("Enter the new quantity of this material (in m²): ");
-                        double quantity = scanner.nextDouble();
+                        double quantity;
+                        do {
+                            System.out.print("Enter the new quantity of this material (in m²): ");
+                            while (!scanner.hasNextDouble()) {
+                                System.out.println("Invalid quantity");
+                                scanner.next();
+                            }
+                            quantity = scanner.nextDouble();
+                        } while (quantity <= 0);
                         material1.setQuantity(quantity);
                     }
                     System.out.println("Do you want to update the unit cost of the material? (y/n)");
                     option = scanner.nextLine();
                     if(option.equals("y")){
                         System.out.println("Enter the new unit cost of this material (€/m²): ");
-                        double unitCost = scanner.nextDouble();
+                        double unitCost ;
+                        do {
+                            System.out.print("Enter the new unit cost of this material (€/m²): ");
+                            while (!scanner.hasNextDouble()) {
+                                System.out.println("Invalid unit cost");
+                                scanner.next();
+                            }
+                            unitCost = scanner.nextDouble();
+                        } while (unitCost <= 0);
                         material1.setUnitCost(unitCost);
                     }
                     System.out.println("Do you want to update the cost of transporting the material? (y/n)");
                     option = scanner.nextLine();
                     if(option.equals("y")){
                         System.out.println("Enter the new cost of transporting this material (€): ");
-                        double transportCost = scanner.nextDouble();
+                        double transportCost ;
+                        do {
+                            System.out.print("Enter the new cost of transporting this material (€): ");
+                            while (!scanner.hasNextDouble()) {
+                                System.out.println("Invalid transport cost");
+                                scanner.next();
+                            }
+                            transportCost = scanner.nextDouble();
+                        } while (transportCost <= 0);
                         material1.setTransportCost(transportCost);
                     }
                     System.out.println("Do you want to update the material quality coefficient? (y/n)");
                     option = scanner.nextLine();
                     if(option.equals("y")){
                         System.out.println("Enter the new material quality coefficient (1.0 = standard, > 1.0 = high quality):");
-                        double coefficientQuality = scanner.nextDouble();
+                        double coefficientQuality ;
+                        do {
+                            System.out.print("Enter the new material quality coefficient (1.0 = standard, > 1.0 = high quality): ");
+                            while (!scanner.hasNextDouble()) {
+                                System.out.println("Invalid coefficient quality");
+                                scanner.next();
+                            }
+                            coefficientQuality = scanner.nextDouble();
+                        } while (coefficientQuality < 1 || coefficientQuality > 2);
                         material1.setQualityCoefficient(coefficientQuality);
                     }
                     materialService.update(material1);
