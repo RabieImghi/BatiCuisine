@@ -2,7 +2,8 @@ import controller.*;
 import repository.ClientRepository;
 import utils.Menu;
 
-import java.util.Scanner;
+import java.lang.reflect.Array;
+import java.util.*;
 
 public class Main {
     static Menu menu = new Menu();
@@ -15,6 +16,7 @@ public class Main {
     static String RED = "\u001B[31m";
     static String RESET = "\u001B[0m";
     public static void main(String[] args) {
+
         boolean exit = false;
         do{
             menu.showMenu();

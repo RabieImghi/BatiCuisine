@@ -42,7 +42,7 @@ public class QuoteController {
         }while (!exit);
     }
     public void save(Project project, double totalCostTva){
-        System.out.print("Enter the quote issue date (format: dd/mm/yyyy) : ");
+        System.out.print("Enter the quote issue date (format: yyyy/mm/dd) : ");
         boolean valid = false;
         LocalDate issueDate = null;
         do {
@@ -52,8 +52,8 @@ public class QuoteController {
             } catch (Exception e) {
                 System.out.println(Cl.RED + "Invalid date format" + Cl.RESET);
             }
-        }while (!valid);
-        System.out.print("Enter the validity date of the quote (format: dd/mm/yyyy) : ");
+        }while (!valid && issueDate.isAfter(LocalDate.now()));
+        System.out.print("Enter the validity date of the quote (format: yyyy/mm/dd) : ");
         LocalDate validityDate = null;
         valid = false;
         do {
@@ -63,7 +63,7 @@ public class QuoteController {
             } catch (Exception e) {
                 System.out.println(Cl.RED + "Invalid date format" + Cl.RESET);
             }
-        }while (!valid);
+        }while (!valid && validityDate.isAfter(LocalDate.now()));
         System.out.print("Would you like to save the quote? (y/n) : ");
         if(scanner.nextLine().equals("y")){
             Quote quote1 = new Quote(totalCostTva,issueDate,validityDate,false,project);
@@ -141,7 +141,7 @@ public class QuoteController {
                     Optional<Quote> quote = quoteService.getByIdProject(project1);
                     if(quote.isPresent()){
                         System.out.println(Cl.RED+"Quote found"+ Cl.RESET);
-                        projectController.calculateTotalCost(project1,0);
+                        projectController.displayProjectDetail(project1,0);
                     }else{
                         System.out.println(Cl.RED+"Quote not found"+ Cl.RESET);
                     }
