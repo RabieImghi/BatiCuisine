@@ -69,7 +69,19 @@ public class ProjectController {
 
                     if (profit.equalsIgnoreCase("y")) {
                         System.out.print(Cl.YELLOW + "Enter the profit margin percentage (%): " + Cl.RESET);
-                        double profitMargin = scanner.nextDouble();
+                        double profitMargin ;
+                        do {
+                            if (scanner.hasNextDouble()){
+                                profitMargin = scanner.nextDouble();
+                                if (profitMargin<0){
+                                    System.out.println(Cl.RED+"Invalid profit margin"+ Cl.RESET);
+                                }
+                            }else {
+                                System.out.println(Cl.RED+"Invalid profit margin"+ Cl.RESET);
+                                scanner.nextLine();
+                                profitMargin = -1;
+                            }
+                        }while (profitMargin<0);
                         scanner.nextLine();
                         project1.setProfitMargin(profitMargin);
                         projectService.updateProfitMargin(project1, profitMargin);
@@ -108,7 +120,12 @@ public class ProjectController {
             System.out.println(Cl.CYAN + "\n\n================================================" + Cl.RESET);
             System.out.println(Cl.YELLOW + "Materials :" + Cl.RESET);
             List<Material> listMaterial = materialController.getAll(project);
-            double vatRate = listMaterial.get(0).getVatRate();
+            double vatRate ;
+            try {
+                vatRate =listMaterial.get(0).getVatRate();
+            }catch (IndexOutOfBoundsException e){
+                vatRate = 0;
+            }
             double vat = (vatRate / 100) + 1;
             totalCostMaterial = materialController.totalCostMaterial(listMaterial);
             if(listMaterial.isEmpty()){

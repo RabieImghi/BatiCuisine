@@ -22,20 +22,46 @@ public class LaborController {
             String name = scanner.nextLine();
 
             System.out.print(Cl.YELLOW + "Enter the hourly rate for this labor (€/h): " + Cl.RESET);
-            double hourlyRate = scanner.nextDouble();
+            double hourlyRate ;
+            do {
+                while (!scanner.hasNextDouble()){
+                    System.out.println(Cl.RED + "Invalid input. Please enter a valid number." + Cl.RESET);
+                    scanner.nextLine();
+                }
+                hourlyRate = scanner.nextDouble();
+            }while (hourlyRate <= 0);
 
             System.out.print(Cl.YELLOW + "Enter the number of hours worked: " + Cl.RESET);
-            double hoursWorked = scanner.nextDouble();
+            double hoursWorked ;
+            do {
+                while (!scanner.hasNextDouble()){
+                    System.out.println(Cl.RED + "Invalid input. Please enter a valid number." + Cl.RESET);
+                    scanner.nextLine();
+                }
+                hoursWorked = scanner.nextDouble();
+            }while (hoursWorked <= 0);
 
             System.out.print(Cl.YELLOW + "Enter the productivity factor (1.0 = standard, > 1.0 = high productivity): " + Cl.RESET);
-            double workerProductivity = scanner.nextDouble();
+            double workerProductivity;
+            do {
+                while (!scanner.hasNextDouble()){
+                    System.out.println(Cl.RED + "Invalid input. Please enter a valid number." + Cl.RESET);
+                    scanner.nextLine();
+                }
+                workerProductivity = scanner.nextDouble();
+            }while (workerProductivity <= 0);
 
-            scanner.nextLine();
 
             System.out.print(Cl.YELLOW + "Enter the labor VAT rate (%): " + Cl.RESET);
-            double vatRate = scanner.nextDouble();
+            double vatRate ;
+            do {
+                while (!scanner.hasNextDouble()){
+                    System.out.println(Cl.RED + "Invalid input. Please enter a valid number." + Cl.RESET);
+                    scanner.nextLine();
+                }
+                vatRate = scanner.nextDouble();
+            }while (vatRate <= 0);
 
-            scanner.nextLine();
             Labor labor = new Labor(name, String.valueOf(ComponentType.LABOR), vatRate, hourlyRate, hoursWorked, workerProductivity, project);
 
             return laborService.save(labor).map(labor1 -> {
@@ -137,21 +163,42 @@ public class LaborController {
                         option = scanner.nextLine();
                         if(option.equals("y")){
                             System.out.print("Enter the new hourly rate: ");
-                            double hourlyRate = scanner.nextDouble();
+                            double hourlyRate ;
+                            do {
+                                while (!scanner.hasNextDouble()){
+                                    System.out.println(Cl.RED + "Invalid input. Please enter a valid number." + Cl.RESET);
+                                    scanner.nextLine();
+                                }
+                                hourlyRate = scanner.nextDouble();
+                            }while (hourlyRate <= 0);
                             labor1.setHourlyRate(hourlyRate);
                         }
                         System.out.print("Do you want to update the number of hours worked? (y/n) : ");
                         option = scanner.nextLine();
                         if(option.equals("y")){
                             System.out.print("Enter the new number of hours worked: ");
-                            double hoursWorked = scanner.nextDouble();
+                            double hoursWorked ;
+                            do {
+                                while (!scanner.hasNextDouble()){
+                                    System.out.println(Cl.RED + "Invalid input. Please enter a valid number." + Cl.RESET);
+                                    scanner.nextLine();
+                                }
+                                hoursWorked = scanner.nextDouble();
+                            }while (hoursWorked <= 0);
                             labor1.setHoursWorked(hoursWorked);
                         }
                         System.out.print("Do you want to update the productivity factor? (y/n) : ");
                         option = scanner.nextLine();
                         if(option.equals("y")){
                             System.out.print("Enter the new productivity factor: ");
-                            double workerProductivity = scanner.nextDouble();
+                            double workerProductivity ;
+                            do {
+                                while (!scanner.hasNextDouble()){
+                                    System.out.println(Cl.RED + "Invalid input. Please enter a valid number." + Cl.RESET);
+                                    scanner.nextLine();
+                                }
+                                workerProductivity = scanner.nextDouble();
+                            }while (workerProductivity <= 0);
                             labor1.setWorkerProductivity(workerProductivity);
                         }
                         laborService.update(labor1);

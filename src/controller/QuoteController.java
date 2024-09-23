@@ -43,9 +43,27 @@ public class QuoteController {
     }
     public void save(Project project, double totalCostTva){
         System.out.print("Enter the quote issue date (format: dd/mm/yyyy) : ");
-        LocalDate issueDate = LocalDate.parse(scanner.nextLine());
+        boolean valid = false;
+        LocalDate issueDate = null;
+        do {
+            try {
+                issueDate = LocalDate.parse(scanner.nextLine());
+                valid = true;
+            } catch (Exception e) {
+                System.out.println(Cl.RED + "Invalid date format" + Cl.RESET);
+            }
+        }while (!valid);
         System.out.print("Enter the validity date of the quote (format: dd/mm/yyyy) : ");
-        LocalDate validityDate = LocalDate.parse(scanner.nextLine());
+        LocalDate validityDate = null;
+        valid = false;
+        do {
+            try {
+                validityDate = LocalDate.parse(scanner.nextLine());
+                valid = true;
+            } catch (Exception e) {
+                System.out.println(Cl.RED + "Invalid date format" + Cl.RESET);
+            }
+        }while (!valid);
         System.out.print("Would you like to save the quote? (y/n) : ");
         if(scanner.nextLine().equals("y")){
             Quote quote1 = new Quote(totalCostTva,issueDate,validityDate,false,project);
@@ -60,7 +78,14 @@ public class QuoteController {
         int id = 0;
         do {
             System.out.print(Cl.CYAN+"Enter the project id : "+ Cl.RESET);
-            id = Integer.parseInt(scanner.nextLine());
+            do {
+                if (scanner.hasNextInt()) {
+                    break;
+                } else {
+                    System.out.println(Cl.RED + "Invalid input" + Cl.RESET);
+                    scanner.nextLine();
+                }
+            } while (!scanner.hasNextInt());
             Optional<Project> project =projectController.getById(id); ;
             if(project.isPresent()){
                 if(quoteService.getByIdProject(project.get()).isPresent()){
