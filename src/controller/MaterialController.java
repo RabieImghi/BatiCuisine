@@ -4,56 +4,52 @@ import domain.Material;
 import domain.Project;
 import service.MaterialService;
 import utils.ComponentType;
+import utils.Cl;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
 public class MaterialController {
-    public static final String RESET = "\u001B[0m";
-    public static final String RED = "\u001B[31m";
-    public static final String GREEN = "\u001B[32m";
-    public static final String YELLOW = "\u001B[33m";
-    public static final String CYAN = "\u001B[36m";
 
     private final MaterialService materialService = new MaterialService();
     private final Scanner scanner = new Scanner(System.in);
     public Optional<Material> save(Project project) {
-        System.out.print(YELLOW + "Do you want to add a material? (y/n): " + RESET);
+        System.out.print(Cl.YELLOW + "Do you want to add a material? (y/n): " + Cl.RESET);
         String option = scanner.nextLine();
 
         if (option.equalsIgnoreCase("y")) {
-            System.out.print(YELLOW + "Enter the material name: " + RESET);
+            System.out.print(Cl.YELLOW + "Enter the material name: " + Cl.RESET);
             String name = scanner.nextLine();
 
-            System.out.print(YELLOW + "Enter the quantity of this material (in m²): " + RESET);
+            System.out.print(Cl.YELLOW + "Enter the quantity of this material (in m²): " + Cl.RESET);
             double quantity = scanner.nextDouble();
 
-            System.out.print(YELLOW + "Enter the unit cost of this material (€/m²): " + RESET);
+            System.out.print(Cl.YELLOW + "Enter the unit cost of this material (€/m²): " + Cl.RESET);
             double unitCost = scanner.nextDouble();
 
-            System.out.print(YELLOW + "Enter the cost of transporting this material (€): " + RESET);
+            System.out.print(Cl.YELLOW + "Enter the cost of transporting this material (€): " + Cl.RESET);
             double transportCost = scanner.nextDouble();
 
-            System.out.print(YELLOW + "Enter the material quality coefficient (1.0 = standard, > 1.0 = high quality): " + RESET);
+            System.out.print(Cl.YELLOW + "Enter the material quality coefficient (1.0 = standard, > 1.0 = high quality): " + Cl.RESET);
             double coefficientQuality = scanner.nextDouble();
 
-            System.out.print(YELLOW + "Enter the material VAT rate (%): " + RESET);
+            System.out.print(Cl.YELLOW + "Enter the material VAT rate (%): " + Cl.RESET);
             double vatRate = scanner.nextDouble();
 
             scanner.nextLine();
 
             Material material = new Material(name, String.valueOf(ComponentType.MATERIAL), vatRate, unitCost, quantity, transportCost, coefficientQuality, project);
             return materialService.save(material).map(material1 -> {
-                System.out.println(GREEN + "Material added successfully!" + RESET);
+                System.out.println(Cl.GREEN + "Material added successfully!" + Cl.RESET);
                 return material1;
             }).or(() -> {
-                System.out.println(RED + "Material not added" + RESET);
+                System.out.println(Cl.RED + "Material not added" + Cl.RESET);
                 return Optional.empty();
             });
 
         } else {
-            System.out.println(RED + "Material Add Cancelled" + RESET);
+            System.out.println(Cl.RED + "Material Add Cancelled" + Cl.RESET);
             return Optional.empty();
         }
     }

@@ -1,58 +1,53 @@
 package controller;
 
 import domain.Labor;
-import domain.Material;
 import domain.Project;
 import service.LaborService;
 import utils.ComponentType;
+import utils.Cl;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
 public class LaborController {
-    public static final String RESET = "\u001B[0m";
-    public static final String RED = "\u001B[31m";
-    public static final String GREEN = "\u001B[32m";
-    public static final String YELLOW = "\u001B[33m";
-    public static final String CYAN = "\u001B[36m";
     private final LaborService laborService = new LaborService();
     private final Scanner scanner = new Scanner(System.in);
 
     public Optional<Labor> save(Project project) {
-        System.out.print(YELLOW + "Do you want to add a labor? (y/n): " + RESET);
+        System.out.print(Cl.YELLOW + "Do you want to add a labor? (y/n): " + Cl.RESET);
 
         if (scanner.nextLine().equalsIgnoreCase("y")) {
-            System.out.print(YELLOW + "Enter the labor type (e.g., Basic Worker, Specialist): " + RESET);
+            System.out.print(Cl.YELLOW + "Enter the labor type (e.g., Basic Worker, Specialist): " + Cl.RESET);
             String name = scanner.nextLine();
 
-            System.out.print(YELLOW + "Enter the hourly rate for this labor (€/h): " + RESET);
+            System.out.print(Cl.YELLOW + "Enter the hourly rate for this labor (€/h): " + Cl.RESET);
             double hourlyRate = scanner.nextDouble();
 
-            System.out.print(YELLOW + "Enter the number of hours worked: " + RESET);
+            System.out.print(Cl.YELLOW + "Enter the number of hours worked: " + Cl.RESET);
             double hoursWorked = scanner.nextDouble();
 
-            System.out.print(YELLOW + "Enter the productivity factor (1.0 = standard, > 1.0 = high productivity): " + RESET);
+            System.out.print(Cl.YELLOW + "Enter the productivity factor (1.0 = standard, > 1.0 = high productivity): " + Cl.RESET);
             double workerProductivity = scanner.nextDouble();
 
             scanner.nextLine();
 
-            System.out.print(YELLOW + "Enter the labor VAT rate (%): " + RESET);
+            System.out.print(Cl.YELLOW + "Enter the labor VAT rate (%): " + Cl.RESET);
             double vatRate = scanner.nextDouble();
 
             scanner.nextLine();
             Labor labor = new Labor(name, String.valueOf(ComponentType.LABOR), vatRate, hourlyRate, hoursWorked, workerProductivity, project);
 
             return laborService.save(labor).map(labor1 -> {
-                System.out.println(GREEN + "Labor added successfully!" + RESET);
+                System.out.println(Cl.GREEN + "Labor added successfully!" + Cl.RESET);
                 return labor1;
             }).or(() -> {
-                System.out.println(RED + "Labor not added." + RESET);
+                System.out.println(Cl.RED + "Labor not added." + Cl.RESET);
                 return Optional.empty();
             });
 
         } else {
-            System.out.println(RED + "Labor Add Cancelled." + RESET);
+            System.out.println(Cl.RED + "Labor Add Cancelled." + Cl.RESET);
             return Optional.empty();
         }
     }
