@@ -20,8 +20,6 @@
 - [Features](#features)
 - [Repository Structure](#repository-structure)
 - [Modules](#modules)
-- [How to Run](#how-to-run)
-- [Future Enhancements](#future-enhancements)
 
 ---
 
