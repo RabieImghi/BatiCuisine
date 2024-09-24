@@ -87,7 +87,7 @@ public class ProjectController {
                         projectService.updateProfitMargin(project1, profitMargin);
                     }
                     System.out.println(Cl.CYAN + "Cost calculation in progress..." + Cl.RESET);
-                    calculateTotalCost(project1, 1);
+                    displayProjectDetail(project1, 1);
 
                 }, () -> System.out.println(Cl.RED + "Project not added" + Cl.RESET));
             } else {
@@ -95,8 +95,11 @@ public class ProjectController {
             }
         });
     }
+    public void updateCost(Project project,double cost){
+        projectService.updateProfitCost(project,cost);
+    }
 
-    public void calculateTotalCost(Project project, int isRunning) {
+    public void displayProjectDetail(Project project, int isRunning) {
         Optional<Client> clients = clientController.findById(project.getClient().getId());
         clients.ifPresent(client -> {
             double totalCostMaterial = 0;
@@ -193,9 +196,7 @@ public class ProjectController {
             }
         });
     }
-    public void updateCost(Project project,double cost){
-        projectService.updateProfitCost(project,cost);
-    }
+
     public double totalCostProject(Project project){
         List<Material> listMaterial = materialController.getAll(project);
         double vat = (listMaterial.get(0).getVatRate()/100)+1;
@@ -281,7 +282,7 @@ public class ProjectController {
             scanner.nextLine();
             Optional<Project> project = projectService.getById(id);
             project.ifPresentOrElse(
-                    project1 -> calculateTotalCost(project1, 0),
+                    project1 -> displayProjectDetail(project1, 0),
                     () -> System.out.println(Cl.RED + "Project not found" + Cl.RESET)
             );
         }

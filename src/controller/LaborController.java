@@ -14,6 +14,34 @@ public class LaborController {
     private final LaborService laborService = new LaborService();
     private final Scanner scanner = new Scanner(System.in);
 
+    public void manageLabor(){
+        boolean exit = false;
+        do{
+            System.out.println("1 -> Add a labor");
+            System.out.println("2 -> Update a labor");
+            System.out.println("3 -> Delete a labor");
+            System.out.println("4 -> Exit");
+            System.out.print("Enter your choice : ");
+            String choice = scanner.nextLine();
+            switch (choice){
+                case "1":
+                    saveNewLabor();
+                    break;
+                case "2":
+                    updateLabor();
+                    break;
+                case "3":
+                    deleteLabor();
+                    break;
+                case "4":
+                    exit = true;
+                    break;
+                default:
+                    System.out.println("Invalid choice");
+            }
+        }while (!exit);
+    }
+
     public Optional<Labor> save(Project project) {
         System.out.print(Cl.YELLOW + "Do you want to add a labor? (y/n): " + Cl.RESET);
 
@@ -60,6 +88,7 @@ public class LaborController {
                     scanner.nextLine();
                 }
                 vatRate = scanner.nextDouble();
+                scanner.nextLine();
             }while (vatRate <= 0);
 
             Labor labor = new Labor(name, String.valueOf(ComponentType.LABOR), vatRate, hourlyRate, hoursWorked, workerProductivity, project);
@@ -94,7 +123,10 @@ public class LaborController {
             scanner.nextLine();
             project = projectController.getById(id);
             project.ifPresentOrElse(project1 -> {
-                save(project1);
+                Optional<Labor> labor = Optional.empty();
+                do{
+                    labor= save(project1);
+                }while (labor.isEmpty());
                 double totalCost = projectController.totalCostProject(project1);
                 projectController.updateCost(project1,totalCost);
                 project1.setTotalCost(totalCost);
@@ -104,33 +136,7 @@ public class LaborController {
         }while (project.isEmpty());
         save(project.get());
     }
-    public void manageLabor(){
-        boolean exit = false;
-        do{
-            System.out.println("1 -> Add a labor");
-            System.out.println("2 -> Update a labor");
-            System.out.println("3 -> Delete a labor");
-            System.out.println("4 -> Exit");
-            System.out.print("Enter your choice : ");
-            String choice = scanner.nextLine();
-            switch (choice){
-                case "1":
-                    saveNewLabor();
-                    break;
-                case "2":
-                    updateLabor();
-                    break;
-                case "3":
-                    deleteLabor();
-                    break;
-                case "4":
-                    exit = true;
-                    break;
-                default:
-                    System.out.println("Invalid choice");
-            }
-        }while (!exit);
-    }
+
     public void updateLabor(){
         Optional<Project> project ;
         int id=0;
