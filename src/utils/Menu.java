@@ -4,20 +4,12 @@ public class Menu {
 
     public void showMenu() {
         System.out.println(Cl.BLUE + "\n|=====================================================|" + Cl.RESET);
-        System.out.println(Cl.PURPLE + "|                   Client Management                 |" + Cl.RESET);
+        System.out.println(Cl.PURPLE + "|    Kitchen Renovation Cost Estimation Application   |" + Cl.RESET);
         System.out.println(Cl.BLUE + "|====================================================+|" + Cl.RESET);
-        System.out.println(Cl.YELLOW + "| [1] Create New Client      [2] Display All Clients  |" + Cl.RESET);
-        System.out.println(Cl.YELLOW + "| [3] Update Client          [4] Delete Client        |" + Cl.RESET);
-        System.out.println(Cl.BLUE + "|=====================================================|" + Cl.RESET);
-        System.out.println(Cl.PURPLE + "|                   Project Management                |" + Cl.RESET);
-        System.out.println(Cl.BLUE + "|=====================================================|" + Cl.RESET);
-        System.out.println(Cl.YELLOW + "| [5] Manage Project         [6] Display All Projects |" + Cl.RESET);
-        System.out.println(Cl.YELLOW + "| [7] Manage Quote                                    |" + Cl.RESET);
-        System.out.println(Cl.BLUE + "|=====================================================|" + Cl.RESET);
-        System.out.println(Cl.PURPLE + "|                     Material / Labor                |" + Cl.RESET);
-        System.out.println(Cl.BLUE + "|=====================================================|" + Cl.RESET);
-        System.out.println(Cl.YELLOW + "| [8]  Manage Material       [9] Manage Labor         |" + Cl.RESET);
-        System.out.println(Cl.YELLOW + "| [10] Close                                          |" + Cl.RESET);
+        System.out.println(Cl.YELLOW + "| [1] Client Manager         [2] Project Manager      |" + Cl.RESET);
+        System.out.println(Cl.YELLOW + "| [3] Display Project        [4] Quote Manager        |" + Cl.RESET);
+        System.out.println(Cl.YELLOW + "| [5] Manage Material        [6] Manage Labor         |" + Cl.RESET);
+        System.out.println(Cl.YELLOW + "| [7] Close                                          |" + Cl.RESET);
         System.out.println(Cl.BLUE + "|=====================================================|" + Cl.RESET);
         System.out.print(Cl.GREEN + "Enter your option: " + Cl.RESET);
     }
@@ -50,5 +42,16 @@ public class Menu {
         System.out.println(Cl.YELLOW + "| [3] Update Project          [4] Exit                |" + Cl.RESET);
         System.out.println(Cl.BLUE + "|=====================================================|" + Cl.RESET);
         System.out.print(Cl.GREEN + "Choose an option: " + Cl.RESET);
+    }
+
+    public static void clientManager() {
+        System.out.println(Cl.BLUE + "\n|=======================================================|" + Cl.RESET);
+        System.out.println(Cl.PURPLE + "|                    Manage Client                      |" + Cl.RESET);
+        System.out.println(Cl.BLUE + "|=======================================================|" + Cl.RESET);
+        System.out.println(Cl.YELLOW + "| [1] Add New Client          [2] Display Client        |" + Cl.RESET);
+        System.out.println(Cl.YELLOW + "| [3] Update Client           [4] Delete Client         |" + Cl.RESET);
+        System.out.println(Cl.YELLOW + "| [5] Exit                                              |" + Cl.RESET);
+        System.out.println(Cl.BLUE + "|=======================================================|" + Cl.RESET);
+        System.out.print(Cl.GREEN + "Enter your choice: " + Cl.RESET);
     }
 }
