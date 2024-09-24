@@ -95,8 +95,8 @@ Key features include:
 
 | File | Summary |
 | --- | --- |
-| [Main.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/Main.java) | <code>❯ REPLACE-ME</code> |
-| [MANIFEST.MF](https://github.com/RabieImghi/BatiCuisine/blob/main/src/MANIFEST.MF) | <code>❯ REPLACE-ME</code> |
+| [Main.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/Main.java) | <code>❯ Entry point for the application, initializes and runs the main program.</code> |
+| [MANIFEST.MF](https://github.com/RabieImghi/BatiCuisine/blob/main/src/MANIFEST.MF) | <code>❯ Manifest file containing metadata about the project, like the main class and classpath.</code> |
 
 </details>
 
@@ -104,11 +104,11 @@ Key features include:
 
 | File | Summary |
 | --- | --- |
-| [ProjectRepository.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/repository/ProjectRepository.java) | <code>❯ REPLACE-ME</code> |
-| [MaterialRepository.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/repository/MaterialRepository.java) | <code>❯ REPLACE-ME</code> |
-| [ClientRepository.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/repository/ClientRepository.java) | <code>❯ REPLACE-ME</code> |
-| [QuoteRepository.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/repository/QuoteRepository.java) | <code>❯ REPLACE-ME</code> |
-| [LaborRepository.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/repository/LaborRepository.java) | <code>❯ REPLACE-ME</code> |
+| [ProjectRepository.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/repository/ProjectRepository.java) | <code>❯ Interface for project data operations such as saving, updating, and fetching project details.</code> |
+| [MaterialRepository.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/repository/MaterialRepository.java) | <code>❯ Interface for managing material-related data for kitchen renovation projects.</code> |
+| [ClientRepository.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/repository/ClientRepository.java) | <code>❯ Interface for handling client data, including saving and retrieving client details.</code> |
+| [QuoteRepository.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/repository/QuoteRepository.java) | <code>❯ Interface for managing quotes related to projects and clients.</code> |
+| [LaborRepository.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/repository/LaborRepository.java) | <code>❯ Interface for tracking labor data, including cost calculations and worker hours.</code> |
 
 </details>
 
@@ -116,11 +116,11 @@ Key features include:
 
 | File | Summary |
 | --- | --- |
-| [ClientRepositoryImpl.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/repository/impl/ClientRepositoryImpl.java) | <code>❯ REPLACE-ME</code> |
-| [ProjectRepositoryImpl.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/repository/impl/ProjectRepositoryImpl.java) | <code>❯ REPLACE-ME</code> |
-| [QuoteRepositoryImpl.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/repository/impl/QuoteRepositoryImpl.java) | <code>❯ REPLACE-ME</code> |
-| [LaborRepositoryImpl.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/repository/impl/LaborRepositoryImpl.java) | <code>❯ REPLACE-ME</code> |
-| [MaterialRepositoryImpl.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/repository/impl/MaterialRepositoryImpl.java) | <code>❯ REPLACE-ME</code> |
+| [ClientRepositoryImpl.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/repository/impl/ClientRepositoryImpl.java) | <code>❯ Implementation of client repository for saving and retrieving client information.</code> |
+| [ProjectRepositoryImpl.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/repository/impl/ProjectRepositoryImpl.java) | <code>❯ Implementation of project repository for performing CRUD operations on project data.</code> |
+| [QuoteRepositoryImpl.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/repository/impl/QuoteRepositoryImpl.java) | <code>❯ Implementation for managing quote data related to kitchen renovation projects.</code> |
+| [LaborRepositoryImpl.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/repository/impl/LaborRepositoryImpl.java) | <code>❯ Implementation of labor repository for storing and retrieving labor cost and productivity information.</code> |
+| [MaterialRepositoryImpl.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/repository/impl/MaterialRepositoryImpl.java) | <code>❯ Implementation of material repository for handling material costs, quantities, and taxes.</code> |
 
 </details>
 
@@ -128,11 +128,11 @@ Key features include:
 
 | File | Summary |
 | --- | --- |
-| [ClientController.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/controller/ClientController.java) | <code>❯ REPLACE-ME</code> |
-| [ProjectController.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/controller/ProjectController.java) | <code>❯ REPLACE-ME</code> |
-| [QuoteController.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/controller/QuoteController.java) | <code>❯ REPLACE-ME</code> |
-| [MaterialController.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/controller/MaterialController.java) | <code>❯ REPLACE-ME</code> |
-| [LaborController.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/controller/LaborController.java) | <code>❯ REPLACE-ME</code> |
+| [ClientController.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/controller/ClientController.java) | <code>❯ Controller for managing client-related HTTP requests and operations.</code> |
+| [ProjectController.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/controller/ProjectController.java) | <code>❯ Controller for handling project management operations and requests.</code> |
+| [QuoteController.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/controller/QuoteController.java) | <code>❯ Controller for creating, updating, and retrieving project quotes.</code> |
+| [MaterialController.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/controller/MaterialController.java) | <code>❯ Controller for managing material data in projects such as costs and availability.</code> |
+| [LaborController.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/controller/LaborController.java) | <code>❯ Controller for managing labor operations, including hours worked and cost tracking.</code> |
 
 </details>
 
@@ -140,12 +140,12 @@ Key features include:
 
 | File | Summary |
 | --- | --- |
-| [Component.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/domain/Component.java) | <code>❯ REPLACE-ME</code> |
-| [Material.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/domain/Material.java) | <code>❯ REPLACE-ME</code> |
-| [Client.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/domain/Client.java) | <code>❯ REPLACE-ME</code> |
-| [Labor.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/domain/Labor.java) | <code>❯ REPLACE-ME</code> |
-| [Project.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/domain/Project.java) | <code>❯ REPLACE-ME</code> |
-| [Quote.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/domain/Quote.java) | <code>❯ REPLACE-ME</code> |
+| [Component.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/domain/Component.java) | <code>❯ Abstract base class representing a project component, extended by Material and Labor classes.</code> |
+| [Material.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/domain/Material.java) | <code>❯ Domain model for representing materials in kitchen renovation projects, including cost and quantity.</code> |
+| [Client.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/domain/Client.java) | <code>❯ Domain model representing a client, including attributes like name, address, and contact details.</code> |
+| [Labor.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/domain/Labor.java) | <code>❯ Domain model representing labor costs, hours worked, and worker efficiency in projects.</code> |
+| [Project.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/domain/Project.java) | <code>❯ Domain model for managing kitchen renovation projects, tracking costs and progress.</code> |
+| [Quote.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/domain/Quote.java) | <code>❯ Domain model for creating and managing quotes for projects, including cost breakdowns.</code> |
 
 </details>
 
@@ -153,9 +153,9 @@ Key features include:
 
 | File | Summary |
 | --- | --- |
-| [ProjectStatus.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/utils/ProjectStatus.java) | <code>❯ REPLACE-ME</code> |
-| [Menu.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/utils/Menu.java) | <code>❯ REPLACE-ME</code> |
-| [ComponentType.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/utils/ComponentType.java) | <code>❯ REPLACE-ME</code> |
+| [ProjectStatus.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/utils/ProjectStatus.java) | <code>❯ Enum representing various statuses a project can have (e.g., Ongoing, Completed).</code> |
+| [Menu.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/utils/Menu.java) | <code>❯ Utility class for displaying CLI-based menus and options to users.</code> |
+| [ComponentType.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/utils/ComponentType.java) | <code>❯ Enum differentiating between types of project components, such as Material or Labor.</code> |
 
 </details>
 
@@ -163,7 +163,7 @@ Key features include:
 
 | File | Summary |
 | --- | --- |
-| [DatabaseConnection.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/config/DatabaseConnection.java) | <code>❯ REPLACE-ME</code> |
+| [DatabaseConnection.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/config/DatabaseConnection.java) | <code>❯ Handles establishing and closing database connections using JDBC.</code> |
 
 </details>
 
@@ -171,11 +171,11 @@ Key features include:
 
 | File | Summary |
 | --- | --- |
-| [ProjectService.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/service/ProjectService.java) | <code>❯ REPLACE-ME</code> |
-| [QuoteService.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/service/QuoteService.java) | <code>❯ REPLACE-ME</code> |
-| [LaborService.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/service/LaborService.java) | <code>❯ REPLACE-ME</code> |
-| [MaterialService.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/service/MaterialService.java) | <code>❯ REPLACE-ME</code> |
-| [ClientService.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/service/ClientService.java) | <code>❯ REPLACE-ME</code> |
+| [ProjectService.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/service/ProjectService.java) | <code>❯ Interface for project-related business logic such as cost estimation and status updates.</code> |
+| [QuoteService.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/service/QuoteService.java) | <code>❯ Interface for managing the business logic behind creating and updating project quotes.</code> |
+| [LaborService.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/service/LaborService.java) | <code>❯ Interface for managing labor-related logic, such as calculating labor costs and productivity.</code> |
+| [MaterialService.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/service/MaterialService.java) | <code>❯ Interface for managing material-related logic, including cost and quality adjustments.</code> |
+| [ClientService.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/service/ClientService.java) | <code>❯ Interface for handling client-related operations such as discounts and information management.</code> |
 
 </details>
 
@@ -183,11 +183,9 @@ Key features include:
 
 | File | Summary |
 | --- | --- |
-| [MaterialServiceImpl.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/service/impl/MaterialServiceImpl.java) | <code>❯ REPLACE-ME</code> |
-| [ProjectServiceImpl.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/service/impl/ProjectServiceImpl.java) | <code>❯ REPLACE-ME</code> |
-| [LaborServiceImpl.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/service/impl/LaborServiceImpl.java) | <code>❯ REPLACE-ME</code> |
-| [ClientServiceImpl.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/service/impl/ClientServiceImpl.java) | <code>❯ REPLACE-ME</code> |
-| [QuoteServiceImpl.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/service/impl/QuoteServiceImpl.java) | <code>❯ REPLACE-ME</code> |
-
-</details>
+| [MaterialServiceImpl.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/service/impl/MaterialServiceImpl.java) | <code>❯ Implementation of material service for managing materials, costs, and inventory tracking.</code> |
+| [ProjectServiceImpl.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/service/impl/ProjectServiceImpl.java) | <code>❯ Implementation of project service, managing overall project flow and cost calculations.</code> |
+| [LaborServiceImpl.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/service/impl/LaborServiceImpl.java) | <code>❯ Implementation of labor service for managing labor costs and productivity metrics.</code> |
+| [ClientServiceImpl.java](https://github.com/RabieImghi/BatiCuisine/blob/main/src/service/impl/ClientServiceImpl.java) | <code>❯ Implementation of client service for handling client data and applying discounts.</code> |
+| [QuoteServiceImpl.java](https://github.com/RabieImghi/BatiCuisine
 
