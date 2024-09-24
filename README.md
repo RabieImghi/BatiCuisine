@@ -1,25 +1,79 @@
-[<img src="https://img.icons8.com/?size=512&id=55494&format=png" align="right" width="25%" padding-right="350">]()
+[<img src="https://img.icons8.com/?size=512&id=55494&format=png" align="right" width="25%" style="padding-right: 350px">]()
 
-# `BATICUISINE`
-
+# **BatiCuisine**
 
 <p align="left">
-		<em>Built with the tools and technologies:</em>
+	<em>Kitchen Renovation Cost Estimation Application</em>
 </p>
+
 <p align="center">
 	<img src="https://img.shields.io/badge/java-%23ED8B00.svg?style=flat&logo=openjdk&logoColor=white" alt="java">
+	<img src="https://img.shields.io/badge/postgresql-%23316192.svg?style=flat&logo=postgresql&logoColor=white" alt="postgresql">
+	<img src="https://img.shields.io/badge/jdbc-%23000000.svg?style=flat&logoColor=white" alt="jdbc">
 </p>
-
-<br>
-
-#####  Table of Contents
-
-- [ Repository Structure](#-repository-structure)
-- [ Modules](#-modules)
 
 ---
 
-##  Repository Structure
+## **Table of Contents**
+
+- [Overview](#overview)
+- [Features](#features)
+- [Repository Structure](#repository-structure)
+- [Modules](#modules)
+- [How to Run](#how-to-run)
+- [Future Enhancements](#future-enhancements)
+
+---
+
+## **Overview**
+
+BatiCuisine is a Java-based application designed to provide accurate cost estimations for kitchen renovation projects. It streamlines project management by accounting for materials, labor, and other associated expenses, while also offering client management and customizable quote generation.
+
+Key features include:
+- Managing clients and projects.
+- Tracking material and labor costs.
+- Generating detailed quotes.
+- Accounting for taxes, discounts, and profit margins.
+
+---
+
+## **Features**
+
+### **1. Project Management**
+- Track kitchen renovation projects with a focus on material and labor costs.
+- Key attributes:
+  - `projectName`: Project's name.
+  - `profitMargin`: Applied profit margin.
+  - `totalCost`: Overall project cost.
+  - `projectStatus`: Project status (Ongoing, Completed, etc.).
+
+### **2. Component Management**
+- **Materials:**
+  - Track unit cost, quantity, transportation cost, and tax rate.
+- **Labor:**
+  - Calculate labor costs based on hourly rate, hours worked, and worker productivity.
+  
+### **3. Client Management**
+- Handle professional and individual clients, applying appropriate discounts.
+- Attributes include `name`, `address`, `phone`, and `isProfessional`.
+
+### **4. Quote Creation**
+- Generate estimates for materials and labor costs with an acceptance feature.
+- Quote attributes:
+  - `estimatedAmount`: Total estimated amount.
+  - `issueDate`: Quote's issue date.
+  - `validityDate`: Date until the quote is valid.
+  - `isAccepted`: Acceptance status of the quote.
+
+### **5. Cost Calculation**
+- Integrate component costs, apply taxes and discounts, and adjust for material quality or worker productivity.
+
+### **6. Display Details and Results**
+- Present detailed project summaries, including client information, costs, taxes, and profit margins.
+
+---
+
+## **Repository Structure**
 
 ```sh
 └── BatiCuisine/
@@ -30,13 +84,9 @@
         ├── config
         ├── controller
         ├── domain
-        ├── green.jar
         ├── repository
         ├── service
         └── utils
-```
-
----
 
 ##  Modules
 
