@@ -180,7 +180,11 @@ public class ProjectController {
             double totalCostMargin = totalCost * project.getProfitMargin() / 100;
             System.out.println(Cl.GREEN + "\n\n3. Total cost before margin: " + Cl.RESET + String.format("%.2f", totalCost) + " €");
             System.out.println(Cl.GREEN + "4. Profit margin (" + project.getProfitMargin() + "%): " + Cl.RESET + String.format("%.2f", totalCostMargin) + " €");
-
+            if(client.isProfessional()){
+                totalCost += totalCost * 0.15;
+            }else {
+                totalCost += totalCost * 0.10;
+            }
             double finalTotalCost = totalCostMargin + totalCost;
             System.out.println(Cl.RED + "-----------------------------------------------------------------------------------------------------------------------------------------------------------------" + Cl.RESET);
             System.out.println(Cl.RED + "**Final total cost of the project: " + Cl.RESET + String.format("%.2f", finalTotalCost) + " €");
@@ -206,6 +210,12 @@ public class ProjectController {
         double totalCostLabor = laborController.totalCostLabor(listLabor);
         double totalCost = (totalCostLabor * vat) + (totalCostMaterial * vat );
         double totalCostProfit = totalCost * profitMargin/100;
+        Client client = project.getClient();
+        if(client.isProfessional()){
+            totalCost += totalCost * 0.15;
+        }else {
+            totalCost += totalCost * 0.10;
+        }
         return totalCostProfit+totalCost;
     }
     public void saveMaterial(Project project){

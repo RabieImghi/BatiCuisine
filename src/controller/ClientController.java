@@ -3,6 +3,7 @@ package controller;
 import domain.Client;
 import service.ClientService;
 import utils.Cl;
+import utils.Menu;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,6 +12,24 @@ import java.util.Scanner;
 public class ClientController {
     private final Scanner scanner = new Scanner(System.in);
     private final ClientService clientService = new ClientService();
+
+    public void manageClient(){
+        String option;
+
+        do{
+            Menu.clientManager();
+            option = scanner.nextLine();
+            switch (option){
+                case "1": save(); break;
+                case "2": getAll(); break;
+                case "3": update(); break;
+                case "4": delete(); break;
+                case "5": break;
+                default:
+                    System.out.print(Cl.RED + "Invalid option. Please choose 1, 2, 3, 4 or 5 : " + Cl.RESET);
+            }
+        }while (!option.equals("5"));
+    }
 
     public Optional<Client> save() {
         String name;
